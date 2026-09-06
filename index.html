@@ -101,12 +101,16 @@
                     </button>
                 </div>
 
-                <!-- Region Quick Filter Pill -->
+               <!-- Region Quick Filter Pill -->
                 <div class="flex items-center space-x-1 text-xs">
                     <span class="text-slate-400 mr-2 hidden sm:inline">Локация:</span>
-                    <span id="slide-region-badge" class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-medium">
-                        Кавагучико
-                    </span>
+                    <input 
+                        id="slide-region-badge" 
+                        type="text"
+                        onchange="updateRegionName(this.value)"
+                        class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-medium text-center focus:border-indigo-400 outline-none w-32"
+                        title="Нажмите, чтобы изменить локацию"
+                    />
                 </div>
 
                 <!-- Slide Navigation Dots -->
@@ -795,8 +799,10 @@
         function saveData() {
             const dataToSave = tripData.map(day => ({
                 budget: day.budget,
-                imgUrl: day.imgUrl
-                timeline: day.timeline        // ← ДОБАВИТЬ ЭТУ СТРОКУ
+                imgUrl: day.imgUrl,
+                timeline: day.timeline,        // ← ДОБАВИТЬ ЭТУ СТРОКУ
+                regionName: day.regionName,      // ← ДОБАВИТЬ ЭТУ СТРОКУ
+                cityTag: day.cityTag             // ← И ЭТУ (заголовок города над названием)
             }));
             localStorage.setItem('japanTripData', JSON.stringify(dataToSave));
         }
@@ -811,6 +817,8 @@
                         if (item.budget) tripData[idx].budget = item.budget;
                         if (item.imgUrl) tripData[idx].imgUrl = item.imgUrl;
                         if (item.timeline) tripData[idx].timeline = item.timeline;
+                        if (item.regionName) tripData[idx].regionName = item.regionName;   // ← ДОБАВИТЬ
+                        if (item.cityTag) tripData[idx].cityTag = item.cityTag;            // ← ДОБАВИТЬ
                     }
                 });
             } catch (e) {
@@ -880,7 +888,7 @@
             document.getElementById('slide-city-tag').innerHTML = `<i data-lucide="map-pin" class="w-3.5 h-3.5 inline mr-1"></i> ${data.cityTag}`;
             document.getElementById('slide-title').innerText = data.title;
             document.getElementById('slide-subtitle').innerText = data.subtitle;
-            document.getElementById('slide-region-badge').innerText = data.regionName;
+            document.getElementById('slide-region-badge').value = data.regionName;
             document.getElementById('slide-tip').innerText = data.tip;
             document.getElementById('slide-highlight').innerText = data.highlight;
             document.getElementById('slide-music').innerText = data.music;
@@ -954,6 +962,15 @@
             renderGrandTotal();
             renderGridCards();
             saveData(); // ← ДОБАВИТЬ ЭТУ СТРОКУ
+        }
+        // ===== РЕДАКТИРОВАНИЕ ЛОКАЦИИ =====
+        function updateRegionName(value) {
+            const newName = value.trim();
+            if (newName === '') return; // не даём оставить пустым
+            tripData[currentSlide].regionName = newName;
+            saveData();
+            renderSidebarList();  // обновить список в карте
+            renderGridCards();    // обновить карточки в сетке
         }
 
         // ===== РЕДАКТИРОВАНИЕ ПЛАНА ДНЯ =====
