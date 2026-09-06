@@ -330,7 +330,19 @@
         async function loadData() {
             // Подготовка структуры (фото, customItems) — оставь свою логику конвертации тут, если она была
             tripData.forEach(day => {
-                if (!day.photos) day.photos = [{ url: day.imgUrl, caption: day.imgCaption || '' }];
+                // Фото
+                if (!day.photos) {
+                    day.photos = [{ url: day.imgUrl, caption: day.imgCaption || '' }];
+                }
+                // Бюджет "Прочее": конвертируем старое число в массив статей
+                if (typeof day.budget.custom === 'number') {
+                    const val = day.budget.custom;
+                    day.budget.customItems = val > 0 ? [{ name: 'Прочее', amount: val }] : [];
+                    delete day.budget.custom;
+                }
+                if (!day.budget.customItems) {
+                    day.budget.customItems = [];
+                }
             });
         
             try {
@@ -552,7 +564,9 @@
         function renderCustomItems() {
             const list = document.getElementById('custom-items-list');
             list.innerHTML = '';
-            const items = tripData[currentSlide].budget.customItems;
+            const budget = tripData[currentSlide].budget;
+            if (!budget.customItems) budget.customItems = [];   // страховка
+            const items = budget.customItems;
             if (items.length === 0) {
                 list.innerHTML = `<p class="text-[11px] text-slate-500 italic text-center py-1">Нет статей. Нажмите "Добавить".</p>`;
             }
