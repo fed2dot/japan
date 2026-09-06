@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Япония 2026 — Стратегический Маршрут и Мастер-План</title>
+    <title>Япония 2026</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -57,9 +57,8 @@
                 </div>
                 <div>
                     <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                        Экспедиция в Японию <span class="text-xs px-2 py-0.5 rounded bg-japanRed/20 text-japanRed font-semibold border border-japanRed/30">14 Дней • Ноябрь 2026</span>
+                        Япония <span class="text-xs px-2 py-0.5 rounded bg-japanRed/20 text-japanRed font-semibold border border-japanRed/30">14 Дней • Ноябрь 2026</span>
                     </h1>
-                    <p class="text-xs text-slate-400 hidden sm:block">Мастер-план для 4 человек (2 пары) • Пик Момидзи • Онсены & Парки</p>
                 </div>
             </div>
 
@@ -797,6 +796,7 @@
             const dataToSave = tripData.map(day => ({
                 budget: day.budget,
                 imgUrl: day.imgUrl
+                timeline: day.timeline        // ← ДОБАВИТЬ ЭТУ СТРОКУ
             }));
             localStorage.setItem('japanTripData', JSON.stringify(dataToSave));
         }
@@ -810,6 +810,7 @@
                     if (tripData[idx]) {
                         if (item.budget) tripData[idx].budget = item.budget;
                         if (item.imgUrl) tripData[idx].imgUrl = item.imgUrl;
+                        if (item.timeline) tripData[idx].timeline = item.timeline;
                     }
                 });
             } catch (e) {
@@ -897,18 +898,42 @@
 
             recalculateSlideBudget();
 
-            // Render Timeline
+            // Render Timeline (с редактированием)
             const timelineContainer = document.getElementById('slide-timeline');
             timelineContainer.innerHTML = '';
-            data.timeline.forEach(item => {
+            data.timeline.forEach((item, idx) => {
                 const row = document.createElement('div');
-                row.className = 'flex items-start space-x-3';
+                row.className = 'flex items-center gap-2 group/timeline';
                 row.innerHTML = `
-                    <span class="text-xs font-bold text-japanGold bg-slate-800 px-2 py-0.5 rounded border border-slate-700 shrink-0">${item.time}</span>
-                    <span class="text-xs text-slate-200">${item.text}</span>
+                    <input 
+                        type="text" 
+                        value="${item.time.replace(/"/g, '&quot;')}" 
+                        onchange="updateTimelineItem(${idx}, 'time', this.value)"
+                        class="text-xs font-bold text-japanGold bg-slate-800 px-2 py-1 rounded border border-slate-700 shrink-0 w-16 text-center focus:border-japanGold outline-none"
+                    />
+                    <input 
+                        type="text" 
+                        value="${item.text.replace(/"/g, '&quot;')}" 
+                        onchange="updateTimelineItem(${idx}, 'text', this.value)"
+                        class="text-xs text-slate-200 bg-slate-900/50 px-2 py-1 rounded border border-transparent hover:border-slate-700 focus:border-japanGold outline-none flex-1"
+                    />
+                    <button 
+                        onclick="removeTimelineItem(${idx})" 
+                        class="text-slate-500 hover:text-japanRed p-1 opacity-0 group-hover/timeline:opacity-100 transition shrink-0"
+                        title="Удалить пункт"
+                    >
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
                 `;
                 timelineContainer.appendChild(row);
             });
+
+            // Кнопка "Добавить пункт"
+            const addBtn = document.createElement('button');
+            addBtn.onclick = addTimelineItem;
+            addBtn.className = 'w-full mt-1 flex items-center justify-center gap-1.5 text-xs text-japanGold bg-slate-800/60 hover:bg-slate-800 py-2 rounded-lg border border-dashed border-slate-700 hover:border-japanGold/50 transition';
+            addBtn.innerHTML = `<i data-lucide="plus" class="w-3.5 h-3.5"></i> Добавить пункт`;
+            timelineContainer.appendChild(addBtn);
 
             // Update Dots
             const dots = document.getElementById('dots-container').children;
@@ -929,6 +954,31 @@
             renderGrandTotal();
             renderGridCards();
             saveData(); // ← ДОБАВИТЬ ЭТУ СТРОКУ
+        }
+
+        // ===== РЕДАКТИРОВАНИЕ ПЛАНА ДНЯ =====
+
+        // Изменить текст или время пункта
+        function updateTimelineItem(index, field, value) {
+            tripData[currentSlide].timeline[index][field] = value;
+            saveData();
+        }
+        
+        // Удалить пункт
+        function removeTimelineItem(index) {
+            tripData[currentSlide].timeline.splice(index, 1);
+            saveData();
+            renderSlide(currentSlide); // перерисовать список
+        }
+        
+        // Добавить новый пункт
+        function addTimelineItem() {
+            tripData[currentSlide].timeline.push({ 
+                time: '00:00', 
+                text: 'Новый пункт плана' 
+            });
+            saveData();
+            renderSlide(currentSlide); // перерисовать список
         }
 
         function recalculateSlideBudget() {
