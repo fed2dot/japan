@@ -792,8 +792,34 @@
         let mainMapMarkers = [];
         let presMapMarkers = [];
 
+        // ===== СОХРАНЕНИЕ ДАННЫХ В БРАУЗЕРЕ =====
+        function saveData() {
+            const dataToSave = tripData.map(day => ({
+                budget: day.budget,
+                imgUrl: day.imgUrl
+            }));
+            localStorage.setItem('japanTripData', JSON.stringify(dataToSave));
+        }
+        
+        function loadData() {
+            const saved = localStorage.getItem('japanTripData');
+            if (!saved) return;
+            try {
+                const parsed = JSON.parse(saved);
+                parsed.forEach((item, idx) => {
+                    if (tripData[idx]) {
+                        if (item.budget) tripData[idx].budget = item.budget;
+                        if (item.imgUrl) tripData[idx].imgUrl = item.imgUrl;
+                    }
+                });
+            } catch (e) {
+                console.log('Не удалось загрузить сохранённые данные', e);
+            }
+        }
+        
         // Initialize Application
         document.addEventListener('DOMContentLoaded', () => {
+            loadData();                    // ← ДОБАВИТЬ ЭТУ СТРОКУ ПЕРВОЙ
             lucide.createIcons();
             initPresentationDots();
             renderSlide(0);
@@ -902,6 +928,7 @@
             recalculateSlideBudget();
             renderGrandTotal();
             renderGridCards();
+            saveData(); // ← ДОБАВИТЬ ЭТУ СТРОКУ
         }
 
         function recalculateSlideBudget() {
@@ -951,6 +978,7 @@
                 tripData[currentSlide].imgUrl = newUrl.trim();
                 document.getElementById('slide-image').src = newUrl.trim();
                 renderGridCards(); // Refresh grid view thumbnail
+                saveData(); // ← ДОБАВИТЬ ЭТУ СТРОКУ
             }
         }
 
