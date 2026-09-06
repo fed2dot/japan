@@ -157,26 +157,6 @@
                             <!-- Dynamic content via JS -->
                         </div>
                     </div>
-
-                    <!-- Key Tip & Highlights -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        <div class="bg-indigo-950/40 border border-indigo-800/40 p-3.5 rounded-xl">
-                            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wide block mb-1">
-                                <i data-lucide="lightbulb" class="w-3.5 h-3.5 inline mr-1"></i> Лайфхак Дня
-                            </span>
-                            <p id="slide-tip" class="text-xs text-indigo-200">
-                                В ноябре темнеет уже в 16:30. Фудзи увидим только утром, поэтому вечер посвящаем отдыху в онсене и вкусной еде.
-                            </p>
-                        </div>
-                        <div class="bg-emerald-950/40 border border-emerald-800/40 p-3.5 rounded-xl">
-                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wide block mb-1">
-                                <i data-lucide="compass" class="w-3.5 h-3.5 inline mr-1"></i> Атмосфера & Еда
-                            </span>
-                            <p id="slide-highlight" class="text-xs text-emerald-200">
-                                Традиционный ужин кайсэки в отельном рёкане, горячие купальни и сауна.
-                            </p>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Right Column: Budget Breakdown & Interactive Map -->
@@ -217,19 +197,6 @@
                         </div>
                     </div>
 
-                    <!-- Spotify & Vibe Widget -->
-                    <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 text-sm">
-                                🎵
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-200">Саундтрек дня</h4>
-                                <p id="slide-music" class="text-xs text-slate-400">Ambient Japanese Lo-Fi & Synthwave</p>
-                            </div>
-                        </div>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2 py-1 rounded-lg border border-slate-700">Spotify</span>
-                    </div>
                 </div>
             </div>
         </section>
@@ -821,9 +788,6 @@
             document.getElementById('slide-title').innerText = data.title;
             document.getElementById('slide-subtitle').innerText = data.subtitle;
             document.getElementById('slide-region-badge').value = data.regionName;
-            document.getElementById('slide-tip').innerText = data.tip;
-            document.getElementById('slide-highlight').innerText = data.highlight;
-            document.getElementById('slide-music').innerText = data.music;
 
             // Render Image & Caption
             const slideImg = document.getElementById('slide-image');
