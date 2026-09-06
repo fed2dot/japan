@@ -288,58 +288,81 @@
         ];
 
         // Global State
+        // ===== НАСТРОЙКИ ОБЛАКА (JSONBin) =====
+        const BIN_ID = '6a9da074da38895dfe40745f';
+        const MASTER_KEY = '$2a$10$BdD4G6nZpXsdOubVzsuftemPQeVcI56IAy.6L9lkpKwJWWRnSUb/q';
+        const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
         let currentSlide = 0;
         let currentPhoto = 0;
 
         // ===== СОХРАНЕНИЕ =====
-        function saveData() {
+// ===== СОХРАНЕНИЕ В ОБЛАКО =====
+        async function saveData() {
             const dataToSave = tripData.map(day => ({
-                budget: { food: day.budget.food, transport: day.budget.transport, customItems: day.budget.customItems },
+                budget: day.budget,
                 photos: day.photos,
                 timeline: day.timeline,
                 regionName: day.regionName,
                 title: day.title,
                 subtitle: day.subtitle
             }));
+        
+            // локальная копия — на случай, если интернет пропадёт
             localStorage.setItem('japanTripData', JSON.stringify(dataToSave));
-        }
-
-        function loadData() {
-            // Конвертация исходных данных в новый формат
-            tripData.forEach(day => {
-                if (!day.photos) {
-                    day.photos = [{ url: day.imgUrl, caption: day.imgCaption || '' }];
-                }
-                if (typeof day.budget.custom === 'number') {
-                    const val = day.budget.custom;
-                    day.budget.customItems = val > 0 ? [{ name: 'Прочее', amount: val }] : [];
-                }
-                if (!day.budget.customItems) day.budget.customItems = [];
-            });
-            // Загрузка сохранённого
-            const saved = localStorage.getItem('japanTripData');
-            if (!saved) return;
+        
             try {
-                const parsed = JSON.parse(saved);
-                parsed.forEach((item, idx) => {
-                    if (tripData[idx]) {
-                        if (item.budget) {
-                            tripData[idx].budget.food = item.budget.food || 0;
-                            tripData[idx].budget.transport = item.budget.transport || 0;
-                            tripData[idx].budget.customItems = item.budget.customItems || [];
-                        }
-                        if (item.photos) tripData[idx].photos = item.photos;
-                        if (item.timeline) tripData[idx].timeline = item.timeline;
-                        if (item.regionName) tripData[idx].regionName = item.regionName;
-                        if (item.title) tripData[idx].title = item.title;
-                        if (item.subtitle) tripData[idx].subtitle = item.subtitle;
-                    }
+                await fetch(BIN_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': MASTER_KEY
+                    },
+                    body: JSON.stringify({ days: dataToSave })
                 });
-            } catch (e) { console.log('Ошибка загрузки', e); }
+                showSaveStatus('✅ Сохранено в облако');
+            } catch (e) {
+                console.log('Ошибка сохранения в облако', e);
+                showSaveStatus('⚠️ Сохранено только локально');
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
+        // ===== ЗАГРУЗКА ИЗ ОБЛАКА =====
+        async function loadData() {
+            // Подготовка структуры (фото, customItems) — оставь свою логику конвертации тут, если она была
+            tripData.forEach(day => {
+                if (!day.photos) day.photos = [{ url: day.imgUrl, caption: day.imgCaption || '' }];
+            });
+        
+            try {
+                const res = await fetch(`${BIN_URL}/latest`, {
+                    headers: { 'X-Master-Key': MASTER_KEY }
+                });
+                const json = await res.json();
+                const saved = json.record.days;
+        
+                if (saved && saved.length > 0) {
+                    saved.forEach((item, idx) => {
+                        if (tripData[idx]) {
+                            Object.assign(tripData[idx], item);
+                        }
+                    });
+                }
+            } catch (e) {
+                console.log('Облако недоступно, беру локальную копию', e);
+                // запасной вариант — localStorage
+                const local = localStorage.getItem('japanTripData');
+                if (local) {
+                    try {
+                        JSON.parse(local).forEach((item, idx) => {
+                            if (tripData[idx]) Object.assign(tripData[idx], item);
+                        });
+                    } catch (err) { console.log(err); }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadData();          // ← ждём данные из облака
             lucide.createIcons();
             initPresentationDots();
             renderSlide(0);
@@ -674,6 +697,21 @@
                 localStorage.removeItem('japanTripData');
                 location.reload();
             }
+        }
+        
+        // Всплывающий статус сохранения
+        function showSaveStatus(text) {
+            let el = document.getElementById('save-status');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'save-status';
+                el.className = 'fixed bottom-4 right-4 z-[100] bg-slate-800 text-slate-100 text-xs px-4 py-2 rounded-xl border border-slate-600 shadow-lg transition-opacity duration-300';
+                document.body.appendChild(el);
+            }
+            el.innerText = text;
+            el.style.opacity = '1';
+            clearTimeout(window._saveTimer);
+            window._saveTimer = setTimeout(() => { el.style.opacity = '0'; }, 2000);
         }
     </script>
 </body>
