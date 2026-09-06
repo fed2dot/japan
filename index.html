@@ -48,10 +48,6 @@
                     <i data-lucide="grid" class="w-4 h-4 inline mr-1"></i> 14 Дней
                 </button>
             </div>
-            <button onclick="openChecklistModal()" class="hidden md:flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-japanGold text-xs font-semibold px-3 py-2 rounded-lg border border-japanGold/30 transition">
-                <i data-lucide="check-square" class="w-4 h-4"></i>
-                <span>Таймлайн броней</span>
-            </button>
         </div>
     </header>
 
@@ -229,45 +225,6 @@
             <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </section>
     </main>
-
-    <!-- Modal: Checklist -->
-    <div id="modal-checklist" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-cardDark border border-slate-700 rounded-3xl max-w-2xl w-full p-6 lg:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeChecklistModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <div class="flex items-center space-x-3 mb-6">
-                <div class="w-10 h-10 rounded-xl bg-japanGold/20 text-japanGold flex items-center justify-center font-bold shrink-0">📋</div>
-                <div>
-                    <h3 class="text-lg font-bold text-white">Таймлайн и чек-лист бронирований</h3>
-                    <p class="text-xs text-slate-400">Критически важные даты открытия продаж для 4 человек</p>
-                </div>
-            </div>
-            <div class="space-y-4 text-sm">
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-japanGold mb-1 flex items-center gap-2"><i data-lucide="ticket" class="w-4 h-4"></i> USJ Express Pass (За 60 дней)</h4>
-                    <p class="text-xs text-slate-300">Старт продаж за 60 дней до визита. Покупать в первые минуты открытия для получения слота в Super Nintendo World.</p>
-                </div>
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-indigo-400 mb-1 flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4"></i> teamLab Planets TOKYO (За 2 месяца)</h4>
-                    <p class="text-xs text-slate-300">Продажи за 2 месяца. Бронируем дневной или дневной-вечерний сеанс.</p>
-                </div>
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-pink-400 mb-1 flex items-center gap-2"><i data-lucide="castle" class="w-4 h-4"></i> Tokyo Disneyland (За 2 месяца)</h4>
-                    <p class="text-xs text-slate-300">Покупка билетов за 2 месяца на будний день. В день посещения берём DPA на Красавицу и Чудовище.</p>
-                </div>
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-emerald-400 mb-1 flex items-center gap-2"><i data-lucide="train" class="w-4 h-4"></i> Синкансэн Nozomi (Ряд E)</h4>
-                    <p class="text-xs text-slate-300">Бронирование через SmartEX за 30 дней. Выберите Ряд E для вида на Фудзи (Осака ➔ Токио).</p>
-                </div>
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-cyan-400 mb-1 flex items-center gap-2"><i data-lucide="home" class="w-4 h-4"></i> Отели в Кавагучико (За 5-6 месяцев)</h4>
-                    <p class="text-xs text-slate-300">Бронировать заранее из-за ограниченного числа tattoo-friendly отелей с онсенами.</p>
-                </div>
-            </div>
-            <button onclick="closeChecklistModal()" class="w-full mt-6 py-3 bg-japanRed hover:bg-red-700 text-white font-bold rounded-2xl transition">Понятно, закрыть</button>
-        </div>
-    </div>
 
     <script>
         const tripData = [
@@ -726,9 +683,6 @@
             if (window.event) window.event.target.className = 'grid-filter-btn px-3 py-1.5 text-xs rounded-xl bg-japanRed text-white font-medium';
             renderGridCards(region);
         }
-
-        function openChecklistModal() { document.getElementById('modal-checklist').classList.remove('hidden'); }
-        function closeChecklistModal() { document.getElementById('modal-checklist').classList.add('hidden'); }
 
         // Сброс данных
         function resetAllData() {
