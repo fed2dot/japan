@@ -275,10 +275,10 @@
         document.addEventListener('DOMContentLoaded', async () => {
             lucide.createIcons();
             initPresentationDots();
-            loadLocal();          // сначала показываем локальные данные (мгновенно)
-            (0);
-            GridCards();
-            await loadFromCloud(); // затем подтягиваем из облака (если настроено)
+            loadLocal();
+            renderSlide(0);
+            renderGridCards();    // ← правильно
+            await loadFromCloud();
         });
 
         window.toggleEditMode = function() {
