@@ -277,7 +277,7 @@
             initPresentationDots();
             loadLocal();          // сначала показываем локальные данные (мгновенно)
             (0);
-            renderGridCards();
+            GridCards();
             await loadFromCloud(); // затем подтягиваем из облака (если настроено)
         });
 
@@ -330,8 +330,8 @@
                     userData = record;
                     saveLocal();
                     (currentSlide);
-                    renderGridCards();
-                    renderGrandTotal();
+                    GridCards();
+                    GrandTotal();
                 }
                 setSyncStatus('Синхронизировано', 'text-emerald-400');
             } catch (e) {
@@ -348,11 +348,16 @@
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Master-Key': MASTER_KEY
+                        'X-Master-Key': MASTER_KEY,
+                        'X-Bin-Versioning': 'false'
                     },
                     body: JSON.stringify(userData)
                 });
-                if (!res.ok) throw new Error('HTTP ' + res.status);
+                if (!res.ok) {
+                    const txt = await res.text();
+                    console.error('Cloud save failed:', res.status, txt);
+                    throw new Error('HTTP ' + res.status);
+                }
                 setSyncStatus('Сохранено', 'text-emerald-400');
             } catch (e) {
                 console.error('Cloud save error', e);
@@ -404,8 +409,8 @@
             } else if (mode === 'grid') {
                 document.getElementById('view-grid').classList.remove('hidden');
                 document.getElementById('btn-mode-grid').className = activeBtn;
-                renderGrandTotal();
-                renderGridCards();
+                GrandTotal();
+                GridCards();
             }
         };
 
@@ -420,7 +425,7 @@
             });
         }
 
-        function renderSlide(index) {
+        function Slide(index) {
             currentSlide = index;
             currentPhoto = 0;
             const eff = getEffectiveDayData(index);
@@ -431,7 +436,7 @@
             document.getElementById('slide-subtitle-input').value = eff.subtitle;
             document.getElementById('budget-food-input').value = eff.budget.food;
             document.getElementById('budget-transport-input').value = eff.budget.transport;
-            renderCustomItems(eff.customItems);
+            CustomItems(eff.customItems);
             recalculateSlideBudget(eff.budget);
 
             renderPhotos(eff.images);
@@ -458,6 +463,9 @@
         function renderPhotos(images) {
             const carouselView = document.getElementById('carousel-view');
             const editorView = document.getElementById('editor-view');
+            if (!carouselView || !editorView) return;
+
+            images = images || [];
 
             if (editMode) {
                 carouselView.classList.add('hidden');
@@ -480,11 +488,11 @@
                 editorView.classList.add('hidden');
                 carouselView.classList.remove('hidden');
                 if (currentPhoto >= images.length) currentPhoto = 0;
+                if (currentPhoto < 0) currentPhoto = 0;
                 const img = document.getElementById('carousel-img');
                 const counter = document.getElementById('carousel-counter');
                 if (images.length === 0) {
-                    img.src = '';
-                    img.alt = 'Нет фото';
+                    img.src = 'https://via.placeholder.com/800x450/1e293b/64748b?text=Нет+фото';
                     counter.innerText = '0 / 0';
                 } else {
                     img.src = images[currentPhoto];
