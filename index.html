@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Япония 2026 — Стратегический Маршрут и Мастер-План</title>
+    <title>Япония</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,22 +26,11 @@
         }
     </script>
     
-    <!-- Leaflet CSS & JS for Interactive Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         html { scroll-behavior: smooth; }
-        .leaflet-popup-content-wrapper {
-            background-color: #1E293B !important;
-            color: #F8FAFC !important;
-            border-radius: 0.75rem !important;
-            border: 1px solid #334155 !important;
-        }
-        .leaflet-popup-tip { background-color: #1E293B !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -57,9 +46,8 @@
                 </div>
                 <div>
                     <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                        Экспедиция в Японию <span class="text-xs px-2 py-0.5 rounded bg-japanRed/20 text-japanRed font-semibold border border-japanRed/30">13 Дней • 16-28 Ноября 2026</span>
+                        Япония <span class="text-xs px-2 py-0.5 rounded bg-japanRed/20 text-japanRed font-semibold border border-japanRed/30">13 Дней • 16-28 Ноября 2026</span>
                     </h1>
-                    <p class="text-xs text-slate-400 hidden sm:block">Мастер-план для 4 человек (2 пары) • Пик Момидзи • Онсены & Парки</p>
                 </div>
             </div>
 
@@ -68,19 +56,10 @@
                 <button id="btn-mode-presentation" onclick="switchMode('presentation')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all bg-japanRed text-white shadow whitespace-nowrap">
                     <i data-lucide="presentation" class="w-4 h-4 inline mr-1"></i> Презентация
                 </button>
-                <button id="btn-mode-map" onclick="switchMode('map')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all whitespace-nowrap">
-                    <i data-lucide="map" class="w-4 h-4 inline mr-1"></i> Карта
-                </button>
                 <button id="btn-mode-grid" onclick="switchMode('grid')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all whitespace-nowrap">
                     <i data-lucide="grid" class="w-4 h-4 inline mr-1"></i> 13 Дней
                 </button>
             </div>
-
-            <!-- Quick Action Button -->
-            <button onclick="openChecklistModal()" class="hidden md:flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-japanGold text-xs font-semibold px-3 py-2 rounded-lg border border-japanGold/30 transition">
-                <i data-lucide="check-square" class="w-4 h-4"></i>
-                <span>Таймлайн броней</span>
-            </button>
         </div>
     </header>
 
@@ -102,99 +81,31 @@
                     </button>
                 </div>
 
-                <!-- Region Quick Filter Pill -->
-                <div class="flex items-center space-x-1 text-xs">
-                    <span class="text-slate-400 mr-2 hidden sm:inline">Локация:</span>
-                    <span id="slide-region-badge" class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-medium">
-                        Кавагучико
-                    </span>
-                </div>
-
                 <!-- Slide Navigation Dots -->
-                <div class="flex items-center space-x-1 overflow-x-auto no-scrollbar max-w-[180px] sm:max-w-xs">
+                <div class="flex items-center space-x-1 overflow-x-auto no-scrollbar max-w-[240px] sm:max-w-xs">
                     <div id="dots-container" class="flex space-x-1.5"></div>
                 </div>
             </div>
 
             <!-- Slide Content Card -->
-            <div class="bg-cardDark border border-slate-700/80 rounded-3xl p-6 lg:p-8 shadow-2xl flex flex-col lg:flex-row gap-8 flex-1 relative overflow-hidden">
+            <div class="bg-cardDark border border-slate-700/80 rounded-3xl p-6 lg:p-8 shadow-2xl flex flex-col gap-8 flex-1 relative overflow-hidden">
                 <div class="absolute -top-24 -right-24 w-96 h-96 bg-japanRed/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <!-- Left Column: Details & Schedule -->
-                <div class="flex-1 flex flex-col justify-between space-y-6 z-10">
-                    <div>
-                        <div class="flex items-center space-x-3 mb-2 flex-wrap gap-y-2">
-                            <span id="slide-day-tag" class="text-xs font-bold uppercase tracking-wider text-japanRed bg-japanRed/10 px-3 py-1 rounded-lg border border-japanRed/20">
-                                16.11 • День Прилета
+                <!-- Top Header & Editable Fields -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 z-10 border-b border-slate-800 pb-4">
+                    <div class="space-y-1 w-full md:w-3/5">
+                        <div class="flex items-center space-x-3 flex-wrap gap-y-2">
+                            <span id="slide-date-tag" class="text-xs font-bold uppercase tracking-wider text-japanRed bg-japanRed/10 px-3 py-1 rounded-lg border border-japanRed/20">
+                                16.11
                             </span>
-                            <span id="slide-city-tag" class="text-xs text-slate-400 flex items-center">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5 inline mr-1"></i> Токио ➔ Кавагучико
-                            </span>
+                            <input id="slide-city-input" type="text" oninput="updateSlideField('cityTag', this.value)" placeholder="Локация / Маршрут" class="bg-slate-900 text-slate-300 px-2 py-1 rounded border border-slate-700 text-xs w-60 outline-none focus:border-japanRed" />
                         </div>
-                        <h2 id="slide-title" class="text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-                            Прилет в Токио и вечерний путь к Кавагучико
-                        </h2>
-                        <p id="slide-subtitle" class="text-sm text-slate-300 mt-2 leading-relaxed">
-                            Прибытие в Токио, прохождение всех формальностей, трансфер к подножию Фудзи и заселение в рёкан с онсеном.
-                        </p>
+                        <input id="slide-title-input" type="text" oninput="updateSlideField('title', this.value)" placeholder="Заголовок дня" class="w-full text-xl lg:text-2xl font-extrabold text-white bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed" />
+                        <textarea id="slide-subtitle-input" oninput="updateSlideField('subtitle', this.value)" placeholder="Подзаголовок дня" rows="2" class="w-full text-sm text-slate-300 bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed resize-none"></textarea>
                     </div>
 
-                    <!-- IMAGE / PHOTO SECTION FOR THE DAY -->
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
-                                <i data-lucide="image" class="w-4 h-4 text-japanGold"></i> Визуал локации / Место дня
-                            </h3>
-                            <button onclick="document.getElementById('image-upload-input').click()" class="text-[11px] text-japanGold hover:underline flex items-center gap-1 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700 transition">
-                                <i data-lucide="upload" class="w-3 h-3"></i> Загрузить фото
-                            </button>
-                        </div>
-                        <div class="relative w-full h-56 lg:h-64 rounded-2xl overflow-hidden border border-slate-700 group bg-slate-900">
-                            <img id="slide-image" src="" alt="Локация дня" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4">
-                                <span id="slide-image-caption" class="text-xs font-semibold text-slate-200 backdrop-blur-md bg-slate-900/60 px-3 py-1 rounded-lg border border-slate-700">
-                                    Озеро Кавагучико и традиционный рёкан
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Timeline / Program -->
-                    <div class="space-y-3">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
-                            <i data-lucide="clock" class="w-4 h-4 text-japanGold"></i> План Дня
-                        </h3>
-                        <div id="slide-timeline" class="space-y-2.5 bg-slate-900/60 p-4 rounded-2xl border border-slate-800 text-sm">
-                            <!-- Dynamic content via JS -->
-                        </div>
-                    </div>
-
-                    <!-- Key Tip & Highlights -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        <div class="bg-indigo-950/40 border border-indigo-800/40 p-3.5 rounded-xl">
-                            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wide block mb-1">
-                                <i data-lucide="lightbulb" class="w-3.5 h-3.5 inline mr-1"></i> Лайфхак Дня
-                            </span>
-                            <p id="slide-tip" class="text-xs text-indigo-200">
-                                В ноябре темнеет уже в 16:30. Фудзи увидим только утром, поэтому вечер посвящаем отдыху в онсене и вкусной еде.
-                            </p>
-                        </div>
-                        <div class="bg-emerald-950/40 border border-emerald-800/40 p-3.5 rounded-xl">
-                            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wide block mb-1">
-                                <i data-lucide="compass" class="w-3.5 h-3.5 inline mr-1"></i> Атмосфера & Еда
-                            </span>
-                            <p id="slide-highlight" class="text-xs text-emerald-200">
-                                Традиционный ужин кайсэки в отельном рёкане, горячие купальни и сауна.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Budget Breakdown & Interactive Map -->
-                <div class="lg:w-2/5 flex flex-col gap-4 z-10">
-
-                    <!-- DAILY ESTIMATED BUDGET BLOCK -->
-                    <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3">
+                    <!-- Budget Block -->
+                    <div class="w-full md:w-2/5 bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3 z-10">
                         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-japanGold flex items-center gap-1.5">
                                 <i data-lucide="wallet" class="w-4 h-4 text-japanGold"></i> Бюджет дня (на 1 чел)
@@ -212,7 +123,7 @@
                                 <input id="budget-transport-input" type="number" oninput="updateCurrentBudget('transport', this.value)" class="w-full bg-slate-900 text-center font-bold text-slate-200 rounded p-1 border border-slate-700 focus:border-japanGold outline-none text-xs" />
                             </div>
                             <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700/60">
-                                <span class="text-[10px] text-japanGold block mb-0.5 font-semibold">🎟️/🏨 Прочее</span>
+                                <span class="text-[10px] text-japanGold block mb-0.5 font-semibold">🎟️ Прочее</span>
                                 <input id="budget-custom-input" type="number" placeholder="¥..." oninput="updateCurrentBudget('custom', this.value)" class="w-full bg-slate-900 text-center font-bold text-japanGold rounded p-1 border border-japanGold/40 focus:border-japanGold outline-none text-xs" />
                             </div>
                         </div>
@@ -223,65 +134,41 @@
                             </span>
                             <div class="text-right">
                                 <span id="budget-total-jpy" class="text-sm font-extrabold text-white">~¥0</span>
-                                <span id="budget-total-usd" class="text-[10px] text-slate-400 block font-normal">(~$0 / ~0 ₽)</span>
+                                <span id="budget-total-sub" class="text-[10px] text-slate-400 block font-normal">(~0 ₽)</span>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Interactive Mini-Map -->
-                    <div class="bg-slate-900 p-3 rounded-2xl border border-slate-800 flex-1 flex flex-col min-h-[250px]">
-                        <div class="flex justify-between items-center mb-2 px-1">
-                            <span class="text-xs font-semibold text-slate-300">Локации на карте</span>
-                            <button onclick="focusSlideMap()" class="text-xs text-japanRed hover:underline flex items-center">
-                                <i data-lucide="maximize-2" class="w-3 h-3 mr-1"></i> На весь экран
-                            </button>
-                        </div>
-                        <div id="presentation-map" class="w-full flex-1 rounded-xl overflow-hidden border border-slate-800 z-0"></div>
-                    </div>
-
-                    <!-- Spotify & Vibe Widget -->
-                    <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 text-sm">
-                                🎵
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-200">Саундтрек дня</h4>
-                                <p id="slide-music" class="text-xs text-slate-400">Ambient Japanese Lo-Fi & Synthwave</p>
-                            </div>
-                        </div>
-                        <span class="text-[11px] bg-slate-800 text-slate-300 px-2 py-1 rounded-lg border border-slate-700">Spotify</span>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- ================= MAP & INTERACTIVE EXPLORER VIEW ================= -->
-        <section id="view-map" class="hidden flex-1 flex flex-col lg:flex-row gap-6 min-h-[600px]">
-            <!-- Map Side -->
-            <div class="flex-1 bg-cardDark border border-slate-700/80 rounded-3xl p-3 flex flex-col shadow-xl">
-                <div class="flex items-center justify-between px-3 py-2 flex-wrap gap-2">
-                    <div class="flex items-center space-x-2">
-                        <i data-lucide="map-pin" class="w-5 h-5 text-japanRed"></i>
-                        <h3 class="text-sm font-bold text-white">Интерактивная карта маршрута</h3>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <button onclick="resetMapBounds()" class="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700">
-                            Показать всю Японию
+                <!-- BIG PHOTO GALLERY SECTION -->
+                <div class="space-y-3 z-10">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
+                            <i data-lucide="image" class="w-4 h-4 text-japanGold"></i> Большие фото локации (можно загрузить несколько)
+                        </h3>
+                        <button onclick="document.getElementById('image-upload-input').click()" class="text-xs text-japanGold hover:underline flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                            <i data-lucide="upload" class="w-4 h-4"></i> Загрузить фотографии
                         </button>
                     </div>
+                    
+                    <div id="slide-photo-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Populated dynamically -->
+                    </div>
                 </div>
-                <div id="main-map" class="w-full flex-1 rounded-2xl overflow-hidden border border-slate-800 min-h-[450px]"></div>
-            </div>
 
-            <!-- Sidebar Day Selector -->
-            <div class="lg:w-96 bg-cardDark border border-slate-700/80 rounded-3xl p-5 flex flex-col gap-4 overflow-hidden max-h-[600px]">
-                <h3 class="text-sm font-bold text-white flex items-center justify-between">
-                    <span>Хронология путешествия</span>
-                    <span class="text-xs font-normal text-slate-400">13 дней</span>
-                </h3>
-                <div id="map-sidebar-list" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar">
-                    <!-- Dynamic List inserted via JS -->
+                <!-- Timeline / Program Editor -->
+                <div class="space-y-3 z-10">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
+                            <i data-lucide="clock" class="w-4 h-4 text-japanGold"></i> План Дня
+                        </h3>
+                        <button onclick="addTimelineItem()" class="text-xs text-emerald-400 hover:underline flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded border border-slate-700">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Добавить пункт
+                        </button>
+                    </div>
+                    <div id="slide-timeline" class="space-y-2.5 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+                        <!-- Dynamic items -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -312,452 +199,205 @@
                             <span id="grand-total-transport" class="text-sm font-bold text-slate-200">¥0</span>
                         </div>
                         <div class="bg-slate-800/90 p-3 rounded-2xl border border-slate-700/80 text-center">
-                            <span class="text-[11px] text-japanGold block font-semibold">🎟️/🏨 Прочее</span>
+                            <span class="text-[11px] text-japanGold block font-semibold">🎟️ Прочее</span>
                             <span id="grand-total-custom" class="text-sm font-bold text-japanGold">¥0</span>
                         </div>
                         <div class="bg-japanRed/20 p-3 rounded-2xl border border-japanRed/40 text-center flex flex-col justify-center">
                             <span class="text-[11px] text-japanRed font-bold uppercase block">ВСЕГО</span>
                             <span id="grand-total-all-jpy" class="text-base font-extrabold text-white">¥0</span>
-                            <span id="grand-total-all-sub" class="text-[10px] text-slate-300 block">(~$0 / ~0 ₽)</span>
+                            <span id="grand-total-all-sub" class="text-[10px] text-slate-300 block">(~0 ₽)</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Filter Pills -->
-            <div class="flex items-center justify-between flex-wrap gap-3 bg-cardDark p-4 rounded-2xl border border-slate-700/60">
-                <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar">
-                    <button onclick="filterGrid('all')" class="grid-filter-btn px-3 py-1.5 text-xs rounded-xl bg-japanRed text-white font-medium">Все дни (13)</button>
-                    <button onclick="filterGrid('kawaguchiko')" class="grid-filter-btn px-3 py-1.5 text-xs rounded-xl bg-slate-800 text-slate-300 hover:text-white font-medium">Кавагучико (Дни 1-2)</button>
-                    <button onclick="filterGrid('osaka')" class="grid-filter-btn px-3 py-1.5 text-xs rounded-xl bg-slate-800 text-slate-300 hover:text-white font-medium">Осака, Нара, Киото (Дни 3-6)</button>
-                    <button onclick="filterGrid('tokyo')" class="grid-filter-btn px-3 py-1.5 text-xs rounded-xl bg-slate-800 text-slate-300 hover:text-white font-medium">Токио (Дни 7-13)</button>
-                </div>
-                <span class="text-xs text-slate-400">Нажмите на карточку, чтобы открыть слайд</span>
-            </div>
-
             <!-- Grid Cards Container -->
-            <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Dynamic cards populated via JS -->
             </div>
         </section>
 
     </main>
 
-    <!-- Modal: Pre-Trip Checklist & Booking Guide -->
-    <div id="modal-checklist" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-cardDark border border-slate-700 rounded-3xl max-w-2xl w-full p-6 lg:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeChecklistModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <div class="flex items-center space-x-3 mb-6">
-                <div class="w-10 h-10 rounded-xl bg-japanGold/20 text-japanGold flex items-center justify-center font-bold shrink-0">
-                    📋
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-white">Таймлайн и чек-лист бронирований</h3>
-                    <p class="text-xs text-slate-400">Критически важные даты открытия продаж для 4 человек</p>
-                </div>
-            </div>
-
-            <div class="space-y-4 text-sm">
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-japanGold mb-1 flex items-center gap-2">
-                        <i data-lucide="ticket" class="w-4 h-4"></i> USJ Express Pass (За 60 дней)
-                    </h4>
-                    <p class="text-xs text-slate-300">Старт продаж за 60 дней до визита. Покупать в первые минуты открытия для получения слота в Super Nintendo World.</p>
-                </div>
-
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-indigo-400 mb-1 flex items-center gap-2">
-                        <i data-lucide="sparkles" class="w-4 h-4"></i> teamLab Planets TOKYO (За 2 месяца)
-                    </h4>
-                    <p class="text-xs text-slate-300">Продажи за 2 месяца. Бронируем дневной или дневной-вечерний сеанс (после храма котов Готоку-дзи).</p>
-                </div>
-
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-pink-400 mb-1 flex items-center gap-2">
-                        <i data-lucide="castle" class="w-4 h-4"></i> Tokyo Disneyland (За 2 месяца)
-                    </h4>
-                    <p class="text-xs text-slate-300">Покупка билетов за 2 месяца на будний день (вторник). В день посещения в приложении сразу берем DPA на Красавицу и Чудовище.</p>
-                </div>
-
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-emerald-400 mb-1 flex items-center gap-2">
-                        <i data-lucide="train" class="w-4 h-4"></i> Синкансэн Nozomi (Ряд E)
-                    </h4>
-                    <p class="text-xs text-slate-300">Бронирование через SmartEX за 30 дней. Обязательно выберите **Ряд E (левая сторона)** для вида на Фудзи во время переезда Осака ➔ Токио.</p>
-                </div>
-
-                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-                    <h4 class="font-bold text-cyan-400 mb-1 flex items-center gap-2">
-                        <i data-lucide="home" class="w-4 h-4"></i> Отели в Кавагучико (За 5-6 месяцев)
-                    </h4>
-                    <p class="text-xs text-slate-300">Бронировать за 5-6 месяцев из-за ограниченного количества *tattoo-friendly* отелей с саунами и онсенами (Ashiwada Hotel / Lakeland Mizunosato).</p>
-                </div>
-            </div>
-
-            <button onclick="closeChecklistModal()" class="w-full mt-6 py-3 bg-japanRed hover:bg-red-700 text-white font-bold rounded-2xl transition">
-                Понятно, закрыть
-            </button>
-        </div>
-    </div>
-
-    <input type="file" id="image-upload-input" accept="image/png, image/jpeg, image/jpg, image/webp" style="display: none;" />
+    <!-- Hidden file input for multi-photo upload -->
+    <input type="file" id="image-upload-input" accept="image/png, image/jpeg, image/jpg, image/webp" multiple style="display: none;" />
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global State & User Overrides (Synced to Firebase)
         let currentSlide = 0;
-        let mainMap = null;
-        let presentationMap = null;
-        let mainMapMarkers = [];
-        let presMapMarkers = [];
-        let userData = {}; // e.g. { day_1: { food: 5000, customImgBase64: '...' } }
+        let userData = {}; // dayOverrides
         let saveTimeout = null;
 
-        // Firebase Setup variables
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'japan-expedition-2026';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'japan-trip-2026';
         const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         
         let app, auth, db, userId;
 
-        const tripData = [
+        const defaultTripData = [
             {
-                day: 1, date: '16.11', region: 'kawaguchiko', regionName: 'Кавагучико', cityTag: 'Токио ➔ Кавагучико',
+                day: 1, date: '16.11', cityTag: 'Токио ➔ Кавагучико',
                 title: 'Прилет в Токио и путь в Кавагучико',
                 subtitle: 'Прибытие в Токио, экспресс до Синдзюку, автобус до Кавагучико и ужин в рёкане.',
-                music: 'Lofi Chill / Mount Fuji Sunset Night',
-                tip: 'В ноябре темнеет уже в 16:30. Саму гору Фудзи увидим во всей красе утром из окна отеля.',
-                highlight: 'Tattoo-Friendly онсен, традиционный ужин кайсэки и сауна в Ashiwada Hotel / Mizunosato.',
-                imgUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Вид на Фудзи и озеро Кавагучико на закате',
+                images: ['https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 4000, transport: 3500, custom: 0 },
-                coords: [35.5085, 138.7180],
-                markers: [
-                    { name: 'Аэропорт Ханэда / Нарита', lat: 35.5494, lng: 139.7798, type: 'airport', desc: 'Прибытие и получение багажа' },
-                    { name: 'Станция Синдзюку (Busta Shinjuku)', lat: 35.6895, lng: 139.7004, type: 'transport', desc: 'Трансфер на автобус' },
-                    { name: 'Ashiwada Hotel / Mizunosato', lat: 35.5085, lng: 138.7180, type: 'hotel', desc: 'Онсен & Сауна (Tattoo-Friendly)' }
-                ],
                 timeline: [
                     { time: 'Этап 1', text: 'Прилет в Токио, прохождение паспортного контроля и получение багажа.' },
-                    { time: 'Этап 2', text: 'Скоростной экспресс (Keikyu / Narita Express) до станции Синдзюку.' },
+                    { time: 'Этап 2', text: 'Скоростной экспресс до станции Синдзюку.' },
                     { time: 'Этап 3', text: 'Автобус-экспресс от автовокзала Busta Shinjuku до Кавагучико.' },
-                    { time: 'Этап 4', text: 'Заселение в отель у озера (Ashiwada Hotel / Lakeland Mizunosato).' },
-                    { time: 'Этап 5', text: 'Традиционный ужин кайсэки, расслабляющая сауна и горячие источники онсен.' }
+                    { time: 'Этап 4', text: 'Заселение в рёкан с онсеном.' }
                 ]
             },
             {
-                day: 2, date: '17.11', region: 'kawaguchiko', regionName: 'Кавагучико', cityTag: 'Кавагучико',
+                day: 2, date: '17.11', cityTag: 'Кавагучико',
                 title: 'Фудзи и Осенний Кленовый Туннель',
                 subtitle: 'Утренний подъем на пагоду Чурейто, алый кленовый коридор Momiji Corridor и канатная дорога.',
-                music: 'Traditional Koto & Autumn Leaves Chill',
-                tip: 'Подъем на пагоду Чурейто насчитывает 398 ступеней. Надевайте удобную обувь!',
-                highlight: 'Пик осенних кленов момидзи на фоне заснеженной Фудзи.',
-                imgUrl: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Пагода Чурейто и алые клёны Момидзи',
+                images: ['https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 4500, transport: 1200, custom: 1500 },
-                coords: [35.5013, 138.8013],
-                markers: [
-                    { name: 'Пагода Чурейто', lat: 35.5013, lng: 138.8013, type: 'sight', desc: '398 ступеней, лучшая панорама Фудзи' },
-                    { name: 'Кленовый туннель Momiji Corridor', lat: 35.5255, lng: 138.7522, type: 'sight', desc: 'Аллея алых кленов' },
-                    { name: 'Парк Оиси (Oishi Park)', lat: 35.5229, lng: 138.7461, type: 'sight', desc: 'Вид на озеро и Фудзи' },
-                    { name: 'Канатная дорога Mt. Fuji Ropeway', lat: 35.5033, lng: 138.7686, type: 'sight', desc: 'Смотровая площадка горы Тэндзё' }
-                ],
                 timeline: [
                     { time: '08:00', text: 'Завтрак с видом на гору Фудзи.' },
-                    { time: '09:00', text: 'Пагода Чурейто (Chureito Pagoda) — главный открыточный вид Японии.' },
-                    { time: '11:30', text: 'Прогулка по алому кленовому туннелю Momiji Corridor и парку Оиси.' },
-                    { time: '14:00', text: 'Обед местной традиционной лапшой Хото (Hoto Noodles).' },
-                    { time: '15:30', text: 'Подъем на канатной дороге Mt. Fuji Panoramic Ropeway.' },
-                    { time: '18:00', text: 'Вечерний релакс в онсене и сауне при отеле.' }
+                    { time: '09:00', text: 'Пагода Чурейто (Chureito Pagoda).' },
+                    { time: '11:30', text: 'Прогулка по алому кленовому туннелю Momiji Corridor.' },
+                    { time: '14:00', text: 'Обед лапшой Хото.' }
                 ]
             },
             {
-                day: 3, date: '18.11', region: 'osaka', regionName: 'Осака', cityTag: 'Кавагучико ➔ Осака',
+                day: 3, date: '18.11', cityTag: 'Кавагучико ➔ Осака',
                 title: 'Переезд в Осаку: Неоновый Дотонбори',
-                subtitle: 'Переезд на скоростном синкансэне Nozomi в регион Кансай, вечерняя гастрономия и неоновые огни.',
-                music: 'City Pop 80s / Osaka Night Neon',
-                tip: 'В Осаке на эскалаторах стоят СПРАВА (в отличие от Токио, где стоят слева!).',
-                highlight: 'Уличная еда Дотонбори: свежие такояки, окономияки и вывеска Running Man.',
-                imgUrl: 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Неоновые улицы и канал Дотонбори в Осаке',
+                subtitle: 'Переезд на скоростном синкансэне в регион Кансай, вечерняя гастрономия и неоновые огни.',
+                images: ['https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 5500, transport: 14500, custom: 0 },
-                coords: [34.6687, 135.5013],
-                markers: [
-                    { name: 'Станция Син-Осака', lat: 34.7334, lng: 135.5001, type: 'transport', desc: 'Прибытие Синкансэна Nozomi' },
-                    { name: 'Дотонбори & Намба', lat: 34.6687, lng: 135.5013, type: 'sight', desc: 'Гастрономия и неон Осаки' },
-                    { name: 'Квартал Синсекай', lat: 34.6525, lng: 135.5063, type: 'sight', desc: 'Ретро-район и обжаренные кушикацу' }
-                ],
                 timeline: [
-                    { time: '09:00', text: 'Выезд из Кавагучико на автобусе/поезде до станции Мисима.' },
-                    { time: '11:30', text: 'Скоростной синкансэн Nozomi до Син-Осаки (2.5 часа).' },
-                    { time: '15:30', text: 'Заселение в отель в Осаке (район Намба или Умэда).' },
-                    { time: '17:30', text: 'Прогулка по Дотонбори, фото у Running Man, ужин такояки и окономияки.' },
-                    { time: '20:00', text: 'Прогулка по атмосферному ретро-кварталу Синсекай.' }
+                    { time: '09:00', text: 'Выезд из Кавагучико.' },
+                    { time: '11:30', text: 'Синкансэн до Син-Осаки.' },
+                    { time: '17:30', text: 'Прогулка по Дотонбори, такояки и окономияки.' }
                 ]
             },
             {
-                day: 4, date: '19.11', region: 'osaka', regionName: 'Нара (из Осаки)', cityTag: 'Осака ➔ Нара ➔ Осака',
+                day: 4, date: '19.11', cityTag: 'Осака ➔ Нара ➔ Осака',
                 title: 'Древняя Нара: Священные Олени и Будда',
-                subtitle: 'Однодневный выезд в древнюю столицу: свободные олени, деревянный храм Тодай-дзи и квартал Нарамачи.',
-                music: 'Traditional Acoustic Strings & Nature',
-                tip: 'Купите печенье shika-senbei для оленей. Поклонитесь оленю — и он поклонится вам в ответ!',
-                highlight: 'Храм Тодай-дзи — одно из крупнейших деревянных зданий мира и 15-метровый бронзовый Будда.',
-                imgUrl: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Священные олени в парке древней Нары',
+                subtitle: 'Однодневный выезд в древнюю столицу: свободные олени и деревянный храм Тодай-дзи.',
+                images: ['https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 4000, transport: 1600, custom: 1000 },
-                coords: [34.6851, 135.8430],
-                markers: [
-                    { name: 'Парк Нара', lat: 34.6851, lng: 135.8430, type: 'sight', desc: 'Свободные олени' },
-                    { name: 'Храм Тодай-дзи', lat: 34.6890, lng: 135.8398, type: 'sight', desc: 'Статуя Большого Будды' },
-                    { name: 'Святилище Касуга Тайся', lat: 34.6814, lng: 135.8484, type: 'sight', desc: 'Тысячи бронзовых фонарей' }
-                ],
                 timeline: [
-                    { time: '09:00', text: 'Поезд Kintetsu Express из Осаки в Нару (40 минут в пути).' },
-                    { time: '10:00', text: 'Прогулка по Парку Нара, общение и кормление священных оленей.' },
-                    { time: '11:30', text: 'Визит в Великий буддийский храм Тодай-дзи.' },
-                    { time: '14:00', text: 'Святилище Касуга Тайся и улочки купеческого района Нарамачи.' },
-                    { time: '18:00', text: 'Возвращение в Осаку, ужин в районе Умэда.' }
+                    { time: '09:00', text: 'Поезд в Нару.' },
+                    { time: '10:00', text: 'Общение и кормление священных оленей в Парке Нара.' },
+                    { time: '11:30', text: 'Визит в храм Тодай-дзи.' }
                 ]
             },
             {
-                day: 5, date: '20.11', region: 'osaka', regionName: 'Киото (из Осаки)', cityTag: 'Осака ➔ Киото ➔ Осака',
+                day: 5, date: '20.11', cityTag: 'Осака ➔ Киото ➔ Осака',
                 title: 'Феноменальный Киото: Бамбук и Алые Клены',
-                subtitle: 'Ранний выезд в Киото. Бамбуковая роща Арасияма без толп, Киёмидзу-дэра над момидзи и ворота Инари.',
-                music: 'Zen Garden Meditations & Flute',
-                tip: 'Приезжать в бамбуковую рощу строго к 08:00 утра, чтобы успеть до туристических автобусов!',
-                highlight: 'Деревянная терраса Киёмидзу-дэра в море красных кленов и 10,000 ворот тории в Фусими Инари.',
-                imgUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Бамбуковый лес Арасияма и ворота Фусими Инари',
+                subtitle: 'Ранний выезд в Киото. Бамбуковая роща Арасияма и ворота Фусими Инари.',
+                images: ['https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 5000, transport: 1800, custom: 1200 },
-                coords: [35.0170, 135.6713],
-                markers: [
-                    { name: 'Бамбуковый лес Арасияма', lat: 35.0170, lng: 135.6713, type: 'sight', desc: 'Утренний бамбуковый лес' },
-                    { name: 'Храм Киёмидзу-дэра', lat: 34.9949, lng: 135.7850, type: 'sight', desc: 'Терраса над момидзи' },
-                    { name: 'Святилище Фусими Инари', lat: 34.9671, lng: 135.7727, type: 'sight', desc: '10,000 алых ворот тории' }
-                ],
                 timeline: [
-                    { time: '06:45', text: 'Ранний выезд из Осаки на поезде JR Special Rapid в Киото.' },
-                    { time: '08:00', text: 'Бамбуковая роща Арасияма без людей, мост Тогэцукё, храм Тэнрю-дзи.' },
-                    { time: '11:30', text: 'Храм Киёмидзу-дэра и прогулка по историческим улочкам Саннэндзака и Нинэндзака.' },
-                    { time: '15:00', text: 'Святилище Фусими Инари: проход сквозь бесконечные красные ворота тории.' },
-                    { time: '18:30', text: 'Возвращение в Осаку, отдых перед днём в парке развлечений.' }
+                    { time: '06:45', text: 'Ранний выезд в Киото.' },
+                    { time: '08:00', text: 'Бамбуковая роща Арасияма.' },
+                    { time: '15:00', text: 'Святилище Фусими Инари.' }
                 ]
             },
             {
-                day: 6, date: '21.11', region: 'osaka', regionName: 'Осака (Парк)', cityTag: 'Universal Studios Japan',
+                day: 6, date: '21.11', cityTag: 'Universal Studios Japan',
                 title: 'Universal Studios Japan (USJ в Осаке)',
-                subtitle: 'Полный день культовых развлечений: Super Nintendo World, Harry Potter и драйвовые аттракционы.',
-                music: 'Super Mario Bros & Movie Soundtracks',
-                tip: 'Приезжайте за 75 минут до открытия! По Express Pass проходите в зону Марио строго по вашему слоту.',
-                highlight: 'Интерактивный Super Nintendo World, полет над Хогвартсом и роллеркостер Flying Dinosaur.',
-                imgUrl: 'https://images.unsplash.com/photo-1624316104870-bb729deaddf1?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Сказочный замок Хогвартс в Universal Studios Japan',
+                subtitle: 'Полный день культовых развлечений: Super Nintendo World и Harry Potter.',
+                images: ['https://images.unsplash.com/photo-1624316104870-bb729deaddf1?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 6000, transport: 800, custom: 18000 },
-                coords: [34.6654, 135.4323],
-                markers: [
-                    { name: 'Universal Studios Japan', lat: 34.6654, lng: 135.4323, type: 'park', desc: 'Парк USJ' }
-                ],
                 timeline: [
-                    { time: '07:30', text: 'Прибытие к воротам Universal Studios Japan.' },
-                    { time: '08:30', text: 'Проход в Super Nintendo World по талону Express Pass (Mario Kart).' },
-                    { time: '12:00', text: 'Мир Гарри Поттера: замок Хогвартс, аттракцион Forbidden Journey.' },
-                    { time: '16:00', text: 'Горки Flying Dinosaur, Hollywood Dream, Jurassic Park.' },
-                    { time: '20:00', text: 'Ужин на пешеходной улице Universal CityWalk и возвращение.' }
+                    { time: '07:30', text: 'Прибытие к воротам USJ.' },
+                    { time: '08:30', text: 'Super Nintendo World.' },
+                    { time: '12:00', text: 'Мир Гарри Поттера.' }
                 ]
             },
             {
-                day: 7, date: '22.11', region: 'tokyo', regionName: 'Токио', cityTag: 'Осака ➔ Токио',
+                day: 7, date: '22.11', cityTag: 'Осака ➔ Токио',
                 title: 'Замок Осаки ➔ Токио и Неоновая Сибуя',
-                subtitle: 'Утренний Замок Осаки, скоростной поезд Nozomi обратно в Токио (с видом на Фудзи) и Shibuya Sky.',
-                music: 'Tokyo Synthwave & Shibuya Beats',
-                tip: 'В синкансэне бронируйте РЯД E (левая сторона), чтобы поймать вид на гору Фудзи во время обеда!',
-                highlight: 'Переезд на скорости 300 км/ч, легендарный перекресток Shibuya Crossing и смотровая Shibuya Sky.',
-                imgUrl: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Легендарный перекресток Shibuya Crossing в Токио',
+                subtitle: 'Утренний Замок Осаки, скоростной поезд в Токио и смотровая Shibuya Sky.',
+                images: ['https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 5500, transport: 14500, custom: 2500 },
-                coords: [35.6595, 139.7004],
-                markers: [
-                    { name: 'Замок Осаки', lat: 34.6873, lng: 135.5262, type: 'sight', desc: 'Исторический замок и сады' },
-                    { name: 'Перекресток Сибуя & Shibuya Sky', lat: 35.6595, lng: 139.7004, type: 'sight', desc: 'Диагональный перекресток и панорама' }
-                ],
                 timeline: [
-                    { time: '09:00', text: 'Прогулка по саду Замка Осаки и покупка экибэнов (обедов) на станции.' },
-                    { time: '11:30', text: 'Синкансэн Nozomi в Токио (2.5 часа, с видом на Фудзи).' },
-                    { time: '14:30', text: 'Заселение в отель в Токио (Синдзюку / Сибуя / Гиндза).' },
-                    { time: '17:00', text: 'Сибуя: перекресток Shibuya Crossing, статуя Хатико и смотровая площадка Shibuya Sky.' }
+                    { time: '09:00', text: 'Сады Замка Осаки.' },
+                    { time: '11:30', text: 'Синкансэн в Токио (с видом на Фудзи).' },
+                    { time: '17:00', text: 'Сибуя: Shibuya Sky.' }
                 ]
             },
             {
-                day: 8, date: '23.11', region: 'tokyo', regionName: 'Токио', cityTag: 'Токио (Сэтагая & Тоёсу)',
+                day: 8, date: '23.11', cityTag: 'Токио (Сэтагая & Тоёсу)',
                 title: 'Храм Котов Готоку-дзи & teamLab Planets',
-                subtitle: 'Тысячи фигурок котов удачи Манэки-нэко, босиком по воде в teamLab Planets и вечер на Одайбе.',
-                music: 'Ambient Digital Soundscapes',
-                tip: 'В teamLab Planets ходят босиком по воде (глубина до колена!). Надевайте брюки, которые легко закатать.',
-                highlight: 'Храм котов Готоку-дзи и иммерсивные зеркально-водные залы музея teamLab Planets.',
-                imgUrl: 'https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Цифровая зеркально-водная инсталляция teamLab Planets',
+                subtitle: 'Тысячи фигурок котов Манэки-нэко и босиком по воде в teamLab Planets.',
+                images: ['https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 5000, transport: 1200, custom: 3800 },
-                coords: [35.6491, 139.7898],
-                markers: [
-                    { name: 'Храм Готоку-дзи', lat: 35.6483, lng: 139.6469, type: 'sight', desc: 'Храм с тысячами котов Манэки-нэко' },
-                    { name: 'teamLab Planets TOKYO', lat: 35.6491, lng: 139.7898, type: 'sight', desc: 'Водный музей цифрового искусства' },
-                    { name: 'Остров Одайба', lat: 35.6284, lng: 139.7753, type: 'sight', desc: 'Набережная и Радужный мост' }
-                ],
                 timeline: [
-                    { time: '09:30', text: 'Поездка в тихий район Сэтагая к храму котов Готоку-дзи (Gotoku-ji).' },
-                    { time: '10:30', text: 'Прогулка по храму, покупка личного талисмана Манэки-нэко.' },
-                    { time: '13:00', text: 'Обед свежими суши и морепродуктами в районе Тоёсу.' },
-                    { time: '15:30', text: 'Иммерсивный сеанс в teamLab Planets TOKYO (водные и зеркальные залы).' },
-                    { time: '18:30', text: 'Вечер на футуристичном острове Одайба с видом на Радужный мост.' }
+                    { time: '09:30', text: 'Храм котов Готоку-дзи.' },
+                    { time: '15:30', text: 'teamLab Planets TOKYO.' }
                 ]
             },
             {
-                day: 9, date: '24.11', region: 'tokyo', regionName: 'Токио', cityTag: 'Асакуса & Акихабара',
+                day: 9, date: '24.11', cityTag: 'Асакуса & Акихабара',
                 title: 'Асакуса & Акихабара',
                 subtitle: 'Древнейший храм Сэнсо-дзи, Акихабара и смотровая башня Tokyo Skytree.',
-                music: 'Retro Anime Soundtracks & J-Pop',
-                tip: 'Не забудьте паспорт! В магазинах Акихабары оформляют скидку Tax-Free 10% прямо на кассе.',
-                highlight: 'Огромный красный фонарь Каминаримон и многоэтажные центры электроники в Акихабаре.',
-                imgUrl: 'https://images.unsplash.com/photo-1583838424715-684c328b294d?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Древний храм Сэнсо-дзи и пагода в районе Асакуса',
+                images: ['https://images.unsplash.com/photo-1583838424715-684c328b294d?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 5000, transport: 1000, custom: 3000 },
-                coords: [35.7148, 139.7967],
-                markers: [
-                    { name: 'Храм Сэнсо-дзи (Асакуса)', lat: 35.7148, lng: 139.7967, type: 'sight', desc: 'Старейший храм Токио' },
-                    { name: 'Акихабара (Akihabara)', lat: 35.6983, lng: 139.7731, type: 'sight', desc: 'Центр электроники и Tax-Free' },
-                    { name: 'Башня Tokyo Skytree', lat: 35.7101, lng: 139.8107, type: 'sight', desc: 'Самая высокая башня Токио' }
-                ],
                 timeline: [
-                    { time: '09:00', text: 'Асакуса: ворота Каминаримон, торговая улочка Накамисэ-дори и храм Сэнсо-дзи.' },
-                    { time: '12:00', text: 'Переезд в район Акихабара: шоппинг техники, винтажных игр и гаджетов.' },
-                    { time: '16:00', text: 'Прогулка вдоль реки Сумида и подъем на башню Tokyo Skytree.' },
-                    { time: '19:00', text: 'Ужин в атмосферном переулке Omoide Yokocho (улочка якитори в Синдзюку).' }
+                    { time: '09:00', text: 'Храм Сэнсо-дзи в Асакусе.' },
+                    { time: '12:00', text: 'Акихабара — шоппинг и электроника.' }
                 ]
             },
             {
-                day: 10, date: '25.11', region: 'tokyo', regionName: 'Токио (Парк)', cityTag: 'Tokyo Disneyland',
+                day: 10, date: '25.11', cityTag: 'Tokyo Disneyland',
                 title: 'Tokyo Disneyland',
-                subtitle: 'Среда — минимальные очереди. Полное погружение в сказку Disney.',
-                music: 'Disney Classics & Electrical Parade',
-                tip: 'Прямо на входе оформляйте DPA (Disney Premier Access) на аттракцион Beauty and the Beast!',
-                highlight: 'Красавица и Чудовище, горки Space Mountain и вечерний парад Electrical Parade.',
-                imgUrl: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Замок Золушки и волшебная атмосфера Диснейленда',
+                subtitle: 'Полное погружение в сказку Disney.',
+                images: ['https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 6000, transport: 1000, custom: 10000 },
-                coords: [35.6329, 139.8804],
-                markers: [
-                    { name: 'Tokyo Disneyland', lat: 35.6329, lng: 139.8804, type: 'park', desc: 'Токийский Диснейленд' }
-                ],
                 timeline: [
-                    { time: '07:30', text: 'Прибытие к воротам Tokyo Disneyland.' },
-                    { time: '08:30', text: 'Вход в парк, быстрая покупка DPA на Beauty and the Beast.' },
-                    { time: '11:00', text: 'Аттракционы Pooh’s Hunny Hunt, Big Thunder Mountain, Space Mountain.' },
-                    { time: '14:00', text: 'Дневной костюмированный парад персонажей.' },
-                    { time: '19:30', text: 'Легендарное вечернее световое шоу Electrical Parade Dreamlights.' }
+                    { time: '07:30', text: 'Вход в парк.' },
+                    { time: '11:00', text: 'Аттракционы и парад героев.' }
                 ]
             },
             {
-                day: 11, date: '26.11', region: 'tokyo', regionName: 'Токио', cityTag: 'Харадзюку & Омотэсандо',
+                day: 11, date: '26.11', cityTag: 'Харадзюку & Омотэсандо',
                 title: 'Святилище Мэйдзи, Харадзюку и Мода',
-                subtitle: 'Святилище Мэйдзи Дзингу, молодежная улица Такесита, бульвар Омотэсандо и шоппинг.',
-                music: 'Tokyo Indie Rock & Chillwave',
-                tip: 'На бульваре Омотэсандо находятся самые красивейшие архитектурные бутиковые здания.',
-                highlight: 'Лес святилища Мэйдзи, гигантские блины на Такесита-дори и шоппинг в Синдзюку.',
-                imgUrl: 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Ворота Тории в святилище Мэйдзи Дзингу',
+                subtitle: 'Святилище Мэйдзи Дзингу, молодежная улица Такесита и шоппинг.',
+                images: ['https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 5500, transport: 800, custom: 0 },
-                coords: [35.6702, 139.7027],
-                markers: [
-                    { name: 'Святилище Мэйдзи Дзингу', lat: 35.6764, lng: 139.6993, type: 'sight', desc: 'Главный синтоистский храм' },
-                    { name: 'Улица Такесита (Харадзюку)', lat: 35.6702, lng: 139.7027, type: 'sight', desc: 'Молодежная мода и блины' },
-                    { name: 'Бульвар Омотэсандо', lat: 35.6672, lng: 139.7081, type: 'sight', desc: 'Архитектурный проспект' }
-                ],
                 timeline: [
-                    { time: '09:30', text: 'Тихая прогулка по вековому лесу святилища Мэйдзи Дзингу.' },
-                    { time: '11:30', text: 'Харадзюку: яркая улица Такесита-дори и японские сладкие блины.' },
-                    { time: '14:00', text: 'Прогулка по стильному бульвару Омотэсандо и кварталу Ура-Харадзюку.' },
-                    { time: '17:00', text: 'Шоппинг в универмагах Синдзюку (Isetan, Takashimaya, Bic Camera).' }
+                    { time: '09:30', text: 'Святилище Мэйдзи Дзингу.' },
+                    { time: '11:30', text: 'Улица Такесита и блины.' }
                 ]
             },
             {
-                day: 12, date: '27.11', region: 'tokyo', regionName: 'Токио', cityTag: 'Токио (Релакс)',
+                day: 12, date: '27.11', cityTag: 'Токио (Релакс)',
                 title: 'Релакс-День: Сады и Онсен',
-                subtitle: 'Буферный день отдыха: Императорский сад, термальный комплекс Spa LaQua и свободное время.',
-                music: 'Smooth Jazz & Relaxing Lounge',
-                tip: 'В комплексе Spa LaQua в Tokyo Dome находятся отличные городские сауны и купальники с термальной водой.',
-                highlight: 'Спокойный ритм дня, закупка японской техники и релакс перед финалом путешествия.',
-                imgUrl: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Восточные Сады Императорского Дворца',
+                subtitle: 'Императорский сад, термальный комплекс Spa LaQua и свободное время.',
+                images: ['https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 6000, transport: 1000, custom: 3500 },
-                coords: [35.7050, 139.7522],
-                markers: [
-                    { name: 'Восточные Сады Императорского Дворца', lat: 35.6865, lng: 139.7594, type: 'sight', desc: 'Исторический сад' },
-                    { name: 'Спа-комплекс Spa LaQua', lat: 35.7050, lng: 139.7522, type: 'hotel', desc: 'Городской онсен и сауны' }
-                ],
                 timeline: [
-                    { time: '10:00', text: 'Прогулка по садам Императорского Дворца (Imperial Palace East Gardens).' },
-                    { time: '13:00', text: 'Закупка электроники и косметики в Yodobashi Camera / Bic Camera.' },
-                    { time: '16:00', text: 'Релакс в термальном комплексе Spa LaQua (Tokyo Dome City).' },
-                    { time: '19:30', text: 'Ужин премиальной говядиной вагю или авторским раменом.' }
+                    { time: '10:00', text: 'Сады Императорского Дворца.' },
+                    { time: '16:00', text: 'Релакс в Spa LaQua.' }
                 ]
             },
             {
-                day: 13, date: '28.11', region: 'tokyo', regionName: 'Токио ➔ Вылет', cityTag: 'Токио ➔ Аэропорт',
+                day: 13, date: '28.11', cityTag: 'Токио ➔ Вылет',
                 title: 'Синдзюку-Гёэн & Вылет домой',
-                subtitle: 'Утренняя прогулка по осеннему парку, докупка сувениров (Tokyo Banana) и вечерний трансфер в аэропорт.',
-                music: 'Sayonara Ambient Nostalgia',
-                tip: 'Будьте в аэропорту за 3 часа до вылета, чтобы спокойно пройти досмотр и докупить подарки в Duty Free!',
-                highlight: 'Прощальный обед и воспоминания о невероятных 13 днях в Стране восходящего солнца!',
-                imgUrl: 'https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=80',
-                imgCaption: 'Японский парк Синдзюку-гёэн в осенних красках',
+                subtitle: 'Утренняя прогулка по осеннему парку, сувениры и вылет домой.',
+                images: ['https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=80'],
                 budget: { food: 6000, transport: 3500, custom: 0 },
-                coords: [35.6852, 139.7101],
-                markers: [
-                    { name: 'Парк Синдзюку-гёэн', lat: 35.6852, lng: 139.7101, type: 'sight', desc: 'Японский сад и гинкго' },
-                    { name: 'Аэропорт Ханэда / Нарита', lat: 35.5494, lng: 139.7798, type: 'airport', desc: 'Вылет домой' }
-                ],
                 timeline: [
-                    { time: '10:00', text: 'Прогулка по осеннему парку Синдзюку-гёэн (Shinjuku Gyoen).' },
-                    { time: '13:00', text: 'Финальная закупка сувениров, японских сладостей Royce, ножей и матча.' },
-                    { time: '15:30', text: 'Прощальный обед и упаковка чемоданов.' },
-                    { time: '17:00', text: 'Трансфер на Narita Express / Keikyu Line в аэропорт.' },
-                    { time: 'Вечер', text: 'Регистрация на рейс, Duty Free и вылет домой! ✈️' }
+                    { time: '10:00', text: 'Парк Синдзюку-гёэн.' },
+                    { time: '15:30', text: 'Трансфер в аэропорт и вылет.' }
                 ]
             }
         ];
 
         document.addEventListener('DOMContentLoaded', async () => {
             lucide.createIcons();
-            
-            // Map Layout Fix Observers
-            const resizeObserver = new ResizeObserver(() => {
-                if (mainMap) mainMap.invalidateSize();
-                if (presentationMap) presentationMap.invalidateSize();
-            });
-            const viewMap = document.getElementById('view-map');
-            const viewPres = document.getElementById('view-presentation');
-            if(viewMap) resizeObserver.observe(viewMap);
-            if(viewPres) resizeObserver.observe(viewPres);
-            
-            // Modal Backdrop Click
-            document.getElementById('modal-checklist').addEventListener('click', (e) => {
-                if (e.target.id === 'modal-checklist') window.closeChecklistModal();
-            });
-
-            // Initialize UI
             initPresentationDots();
             renderSlide(0);
-            initMainMap();
-            initPresentationMap();
             renderGridCards();
-            renderSidebarList();
-            
-            // Initialize Firebase Data Persistence
+
             try {
                 const firebaseConfig = JSON.parse(firebaseConfigStr);
                 if (Object.keys(firebaseConfig).length > 0) {
@@ -775,7 +415,7 @@
                     subscribeToUserData();
                 }
             } catch (err) {
-                console.log("Running in offline/local mode. Data will not persist across reloads.", err);
+                console.log("Offline mode active.");
             }
         });
 
@@ -795,103 +435,50 @@
             });
         }
 
-        // Get effective data merging defaults and user overrides
         function getEffectiveDayData(index) {
-            const baseDay = tripData[index];
+            const baseDay = defaultTripData[index];
             const userDay = userData[`day_${baseDay.day}`] || {};
             
             return {
                 ...baseDay,
-                effectiveBudget: {
-                    food: userDay.food !== undefined ? userDay.food : baseDay.budget.food,
-                    transport: userDay.transport !== undefined ? userDay.transport : baseDay.budget.transport,
-                    custom: userDay.custom !== undefined ? userDay.custom : baseDay.budget.custom
+                cityTag: userDay.cityTag !== undefined ? userDay.cityTag : baseDay.cityTag,
+                title: userDay.title !== undefined ? userDay.title : baseDay.title,
+                subtitle: userDay.subtitle !== undefined ? userDay.subtitle : baseDay.subtitle,
+                images: userDay.images || baseDay.images,
+                budget: {
+                    food: userDay.budget?.food !== undefined ? userDay.budget.food : baseDay.budget.food,
+                    transport: userDay.budget?.transport !== undefined ? userDay.budget.transport : baseDay.budget.transport,
+                    custom: userDay.budget?.custom !== undefined ? userDay.budget.custom : baseDay.budget.custom
                 },
-                effectiveImgUrl: userDay.customImgBase64 || baseDay.imgUrl
+                timeline: userDay.timeline || baseDay.timeline
             };
         }
 
-        document.getElementById('image-upload-input').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = function() {
-                    // Compress image using Canvas to fit Firestore limits
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    
-                    const MAX_SIZE = 800; // max width/height
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > height && width > MAX_SIZE) {
-                        height *= MAX_SIZE / width;
-                        width = MAX_SIZE;
-                    } else if (height > MAX_SIZE) {
-                        width *= MAX_SIZE / height;
-                        height = MAX_SIZE;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    // Convert to compact Base64 JPEG (60% quality)
-                    const base64 = canvas.toDataURL('image/jpeg', 0.6);
-                    
-                    const dayId = tripData[currentSlide].day;
-                    const dayKey = `day_${dayId}`;
-                    
-                    if (!userData[dayKey]) userData[dayKey] = {};
-                    userData[dayKey].customImgBase64 = base64;
-
-                    // Update UI immediately
-                    renderSlide(currentSlide);
-                    renderGridCards();
-
-                    // Save to Firestore
-                    if (userId && db) {
-                        const docRef = doc(db, 'artifacts', appId, 'users', userId, 'days', dayKey);
-                        setDoc(docRef, { customImgBase64: base64 }, { merge: true });
-                    }
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-
         window.switchMode = function(mode) {
             document.getElementById('view-presentation').classList.add('hidden');
-            document.getElementById('view-map').classList.add('hidden');
             document.getElementById('view-grid').classList.add('hidden');
 
             const inactiveBtn = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all whitespace-nowrap";
             const activeBtn = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all bg-japanRed text-white shadow whitespace-nowrap";
 
             document.getElementById('btn-mode-presentation').className = inactiveBtn;
-            document.getElementById('btn-mode-map').className = inactiveBtn;
             document.getElementById('btn-mode-grid').className = inactiveBtn;
 
             if (mode === 'presentation') {
                 document.getElementById('view-presentation').classList.remove('hidden');
                 document.getElementById('btn-mode-presentation').className = activeBtn;
-            } else if (mode === 'map') {
-                document.getElementById('view-map').classList.remove('hidden');
-                document.getElementById('btn-mode-map').className = activeBtn;
             } else if (mode === 'grid') {
                 document.getElementById('view-grid').classList.remove('hidden');
                 document.getElementById('btn-mode-grid').className = activeBtn;
                 renderGrandTotal();
+                renderGridCards();
             }
         };
 
         function initPresentationDots() {
             const container = document.getElementById('dots-container');
             container.innerHTML = '';
-            tripData.forEach((_, idx) => {
+            defaultTripData.forEach((_, idx) => {
                 const btn = document.createElement('button');
                 btn.className = `w-2.5 h-2.5 rounded-full transition shrink-0 ${idx === 0 ? 'bg-japanRed scale-125' : 'bg-slate-700 hover:bg-slate-500'}`;
                 btn.onclick = () => window.goToSlide(idx);
@@ -901,39 +488,44 @@
 
         function renderSlide(index) {
             currentSlide = index;
-            const effData = getEffectiveDayData(index);
+            const eff = getEffectiveDayData(index);
 
-            document.getElementById('slide-indicator').innerText = `${effData.date} (День ${effData.day})`;
-            document.getElementById('slide-day-tag').innerText = `${effData.date} • День ${effData.day}`;
-            document.getElementById('slide-city-tag').innerHTML = `<i data-lucide="map-pin" class="w-3.5 h-3.5 inline mr-1"></i> ${effData.cityTag}`;
-            document.getElementById('slide-title').innerText = effData.title;
-            document.getElementById('slide-subtitle').innerText = effData.subtitle;
-            document.getElementById('slide-region-badge').innerText = effData.regionName;
-            document.getElementById('slide-tip').innerText = effData.tip;
-            document.getElementById('slide-highlight').innerText = effData.highlight;
-            document.getElementById('slide-music').innerText = effData.music;
+            document.getElementById('slide-indicator').innerText = `${eff.date} (День ${eff.day})`;
+            document.getElementById('slide-date-tag').innerText = eff.date;
+            document.getElementById('slide-city-input').value = eff.cityTag;
+            document.getElementById('slide-title-input').value = eff.title;
+            document.getElementById('slide-subtitle-input').value = eff.subtitle;
 
-            // Render Image
-            const slideImg = document.getElementById('slide-image');
-            slideImg.src = effData.effectiveImgUrl;
-            document.getElementById('slide-image-caption').innerText = effData.imgCaption;
+            document.getElementById('budget-food-input').value = eff.budget.food;
+            document.getElementById('budget-transport-input').value = eff.budget.transport;
+            document.getElementById('budget-custom-input').value = eff.budget.custom;
+            recalculateSlideBudget(eff.budget);
 
-            // Render Budget (User Overrides applied)
-            const b = effData.effectiveBudget;
-            document.getElementById('budget-food-input').value = b.food || 0;
-            document.getElementById('budget-transport-input').value = b.transport || 0;
-            document.getElementById('budget-custom-input').value = b.custom || 0;
-            recalculateSlideBudget();
+            // Render Photos
+            const gallery = document.getElementById('slide-photo-gallery');
+            gallery.innerHTML = '';
+            eff.images.forEach((imgUrl, imgIdx) => {
+                const card = document.createElement('div');
+                card.className = 'relative h-64 rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 group';
+                card.innerHTML = `
+                    <img src="${imgUrl}" alt="Фото" class="w-full h-full object-cover" />
+                    <button onclick="removePhoto(${imgIdx})" class="absolute top-3 right-3 bg-slate-950/80 text-red-400 hover:text-red-300 p-2 rounded-xl border border-slate-700 opacity-0 group-hover:opacity-100 transition">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                `;
+                gallery.appendChild(card);
+            });
 
             // Render Timeline
             const timelineContainer = document.getElementById('slide-timeline');
             timelineContainer.innerHTML = '';
-            effData.timeline.forEach(item => {
+            eff.timeline.forEach((item, tIdx) => {
                 const row = document.createElement('div');
-                row.className = 'flex items-start space-x-3';
+                row.className = 'flex items-center space-x-2 bg-slate-800/60 p-2 rounded-xl border border-slate-700/60';
                 row.innerHTML = `
-                    <span class="text-xs font-bold text-japanGold bg-slate-800 px-2 py-0.5 rounded border border-slate-700 shrink-0">${item.time}</span>
-                    <span class="text-xs text-slate-200">${item.text}</span>
+                    <input type="text" value="${item.time}" oninput="updateTimelineItem(${tIdx}, 'time', this.value)" class="w-20 bg-slate-900 text-xs text-japanGold font-bold px-2 py-1 rounded border border-slate-700 outline-none text-center" />
+                    <input type="text" value="${item.text}" oninput="updateTimelineItem(${tIdx}, 'text', this.value)" class="flex-1 bg-slate-900 text-xs text-slate-200 px-3 py-1 rounded border border-slate-700 outline-none" />
+                    <button onclick="removeTimelineItem(${tIdx})" class="text-slate-400 hover:text-red-400 p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
                 `;
                 timelineContainer.appendChild(row);
             });
@@ -944,239 +536,185 @@
                 dot.className = `w-2.5 h-2.5 rounded-full transition shrink-0 ${idx === index ? 'bg-japanRed scale-125' : 'bg-slate-700 hover:bg-slate-500'}`;
             });
 
-            updatePresentationMap(effData);
             lucide.createIcons();
         }
 
-        window.updateCurrentBudget = function(category, val) {
-            const num = parseInt(val, 10) || 0;
-            const dayId = tripData[currentSlide].day;
-            const dayKey = `day_${dayId}`;
-            
-            if (!userData[dayKey]) userData[dayKey] = {};
-            userData[dayKey][category] = num;
-
-            // Optimistic UI updates
-            recalculateSlideBudget();
-            renderGrandTotal();
-            renderGridCards();
-
-            // Debounced Firestore Save
-            clearTimeout(saveTimeout);
-            saveTimeout = setTimeout(() => {
-                if (!userId || !db) return;
-                const docRef = doc(db, 'artifacts', appId, 'users', userId, 'days', dayKey);
-                setDoc(docRef, userData[dayKey], { merge: true }).catch(err => console.error("Save error:", err));
-            }, 1000);
+        window.updateSlideField = function(field, val) {
+            const dayId = defaultTripData[currentSlide].day;
+            const key = `day_${dayId}`;
+            if (!userData[key]) userData[key] = getEffectiveDayData(currentSlide);
+            userData[key][field] = val;
+            saveChanges();
         };
 
-        function recalculateSlideBudget() {
-            const b = getEffectiveDayData(currentSlide).effectiveBudget;
-            const totalJpy = (b.food || 0) + (b.transport || 0) + (b.custom || 0);
-            const totalUsd = Math.round(totalJpy / 150);
-            const totalRub = Math.round(totalJpy * 0.65);
+        window.updateCurrentBudget = function(category, val) {
+            const num = parseInt(val, 10) || 0;
+            const dayId = defaultTripData[currentSlide].day;
+            const key = `day_${dayId}`;
+            if (!userData[key]) userData[key] = getEffectiveDayData(currentSlide);
+            if (!userData[key].budget) userData[key].budget = { food: 0, transport: 0, custom: 0 };
+            userData[key].budget[category] = num;
 
-            document.getElementById('budget-total-jpy').innerText = `~¥${totalJpy.toLocaleString()}`;
-            document.getElementById('budget-total-usd').innerText = `(~${totalUsd} $ / ~${totalRub.toLocaleString()} ₽)`;
+            recalculateSlideBudget(userData[key].budget);
+            renderGrandTotal();
+            saveChanges();
+        };
+
+        function recalculateSlideBudget(b) {
+            const total = (b.food || 0) + (b.transport || 0) + (b.custom || 0);
+            const rub = Math.round(total * 0.65);
+            document.getElementById('budget-total-jpy').innerText = `~¥${total.toLocaleString()}`;
+            document.getElementById('budget-total-sub').innerText = `(~${rub.toLocaleString()} ₽)`;
         }
 
-        function renderGrandTotal() {
-            let totalFood = 0, totalTransport = 0, totalCustom = 0;
-            tripData.forEach((_, idx) => {
-                const b = getEffectiveDayData(idx).effectiveBudget;
-                totalFood += b.food || 0;
-                totalTransport += b.transport || 0;
-                totalCustom += b.custom || 0;
+        window.addTimelineItem = function() {
+            const dayId = defaultTripData[currentSlide].day;
+            const key = `day_${dayId}`;
+            const eff = getEffectiveDayData(currentSlide);
+            if (!userData[key]) userData[key] = eff;
+            userData[key].timeline.push({ time: '12:00', text: 'Новое событие' });
+            renderSlide(currentSlide);
+            saveChanges();
+        };
+
+        window.updateTimelineItem = function(index, field, val) {
+            const dayId = defaultTripData[currentSlide].day;
+            const key = `day_${dayId}`;
+            if (!userData[key]) userData[key] = getEffectiveDayData(currentSlide);
+            userData[key].timeline[index][field] = val;
+            saveChanges();
+        };
+
+        window.removeTimelineItem = function(index) {
+            const dayId = defaultTripData[currentSlide].day;
+            const key = `day_${dayId}`;
+            if (!userData[key]) userData[key] = getEffectiveDayData(currentSlide);
+            userData[key].timeline.splice(index, 1);
+            renderSlide(currentSlide);
+            saveChanges();
+        };
+
+        window.removePhoto = function(index) {
+            const dayId = defaultTripData[currentSlide].day;
+            const key = `day_${dayId}`;
+            const eff = getEffectiveDayData(currentSlide);
+            if (!userData[key]) userData[key] = eff;
+            userData[key].images.splice(index, 1);
+            renderSlide(currentSlide);
+            saveChanges();
+        };
+
+        // Multi-image file upload handler
+        document.getElementById('image-upload-input').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (!files || files.length === 0) return;
+
+            const dayId = defaultTripData[currentSlide].day;
+            const key = `day_${dayId}`;
+            const eff = getEffectiveDayData(currentSlide);
+            if (!userData[key]) userData[key] = JSON.parse(JSON.stringify(eff));
+
+            let processed = 0;
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const MAX_SIZE = 900;
+                        let w = img.width, h = img.height;
+                        if (w > h && w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; }
+                        else if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; }
+                        canvas.width = w;
+                        canvas.height = h;
+                        ctx.drawImage(img, 0, 0, w, h);
+                        
+                        const base64 = canvas.toDataURL('image/jpeg', 0.65);
+                        userData[key].images.push(base64);
+                        
+                        processed++;
+                        if (processed === files.length) {
+                            renderSlide(currentSlide);
+                            renderGridCards();
+                            saveChanges();
+                        }
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
             });
+        });
 
-            const grandTotalJpy = totalFood + totalTransport + totalCustom;
-            const grandTotalUsd = Math.round(grandTotalJpy / 150);
-            const grandTotalRub = Math.round(grandTotalJpy * 0.65);
-
-            const elFood = document.getElementById('grand-total-food');
-            const elTrans = document.getElementById('grand-total-transport');
-            const elCust = document.getElementById('grand-total-custom');
-            const elAllJpy = document.getElementById('grand-total-all-jpy');
-            const elAllSub = document.getElementById('grand-total-all-sub');
-
-            if (elFood) elFood.innerText = `¥${totalFood.toLocaleString()}`;
-            if (elTrans) elTrans.innerText = `¥${totalTransport.toLocaleString()}`;
-            if (elCust) elCust.innerText = `¥${totalCustom.toLocaleString()}`;
-            if (elAllJpy) elAllJpy.innerText = `¥${grandTotalJpy.toLocaleString()}`;
-            if (elAllSub) elAllSub.innerText = `(~${grandTotalUsd.toLocaleString()} $ / ~${grandTotalRub.toLocaleString()} ₽)`;
-        }
-
-        // Navigation
-        window.nextSlide = function() { if (currentSlide < tripData.length - 1) renderSlide(currentSlide + 1); };
+        window.nextSlide = function() { if (currentSlide < defaultTripData.length - 1) renderSlide(currentSlide + 1); };
         window.prevSlide = function() { if (currentSlide > 0) renderSlide(currentSlide - 1); };
         window.goToSlide = function(index) {
             renderSlide(index);
             window.switchMode('presentation');
         };
 
-        function initMainMap() {
-            mainMap = L.map('main-map').setView([35.2000, 137.5000], 7);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(mainMap);
-            plotAllMainMarkers();
-        }
-
-        function plotAllMainMarkers() {
-            mainMapMarkers.forEach(m => mainMap.removeLayer(m));
-            mainMapMarkers = [];
-            const allPoints = [];
-
-            tripData.forEach(day => {
-                day.markers.forEach(mk => {
-                    allPoints.push([mk.lat, mk.lng]);
-                    const marker = L.circleMarker([mk.lat, mk.lng], {
-                        radius: 7, fillColor: getMarkerColor(mk.type), color: '#FFFFFF', weight: 2, fillOpacity: 0.9
-                    }).addTo(mainMap);
-
-                    marker.bindPopup(`
-                        <div class="p-1">
-                            <span class="text-[10px] uppercase font-bold text-japanRed">${day.date} • ${day.regionName}</span>
-                            <h4 class="font-bold text-sm text-white mt-0.5">${mk.name}</h4>
-                            <p class="text-xs text-slate-300 mt-1">${mk.desc}</p>
-                            <button onclick="window.goToSlide(${day.day - 1})" class="mt-2 w-full text-center text-xs bg-japanRed hover:bg-red-700 text-white font-semibold py-1 rounded transition">
-                                Открыть ${day.date}
-                            </button>
-                        </div>
-                    `);
-                    mainMapMarkers.push(marker);
-                });
+        function renderGrandTotal() {
+            let f = 0, t = 0, c = 0;
+            defaultTripData.forEach((_, idx) => {
+                const b = getEffectiveDayData(idx).budget;
+                f += b.food || 0;
+                t += b.transport || 0;
+                c += b.custom || 0;
             });
+            const sum = f + t + c;
+            const rub = Math.round(sum * 0.65);
 
-            if (allPoints.length > 0) mainMap.fitBounds(L.latLngBounds(allPoints), { padding: [30, 30] });
+            document.getElementById('grand-total-food').innerText = `¥${f.toLocaleString()}`;
+            document.getElementById('grand-total-transport').innerText = `¥${t.toLocaleString()}`;
+            document.getElementById('grand-total-custom').innerText = `¥${c.toLocaleString()}`;
+            document.getElementById('grand-total-all-jpy').innerText = `¥${sum.toLocaleString()}`;
+            document.getElementById('grand-total-all-sub').innerText = `(~${rub.toLocaleString()} ₽)`;
         }
 
-        function initPresentationMap() {
-            presentationMap = L.map('presentation-map', { zoomControl: false, attributionControl: false }).setView([35.5085, 138.7180], 10);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(presentationMap);
-        }
-
-        function updatePresentationMap(dayData) {
-            if (!presentationMap) return;
-            presMapMarkers.forEach(m => presentationMap.removeLayer(m));
-            presMapMarkers = [];
-            const points = [];
-
-            dayData.markers.forEach(mk => {
-                points.push([mk.lat, mk.lng]);
-                const marker = L.circleMarker([mk.lat, mk.lng], {
-                    radius: 8, fillColor: getMarkerColor(mk.type), color: '#FFFFFF', weight: 2, fillOpacity: 1
-                }).addTo(presentationMap);
-                marker.bindPopup(`<b style="color:white;">${mk.name}</b><br/><span style="font-size:11px;color:#cbd5e1;">${mk.desc}</span>`);
-                presMapMarkers.push(marker);
-            });
-
-            if (points.length === 1) {
-                presentationMap.setView(points[0], 12);
-            } else if (points.length > 1) {
-                presentationMap.fitBounds(L.latLngBounds(points), { padding: [40, 40] });
-            }
-        }
-
-        window.focusSlideMap = function() {
-            window.switchMode('map');
-            const day = tripData[currentSlide];
-            const points = day.markers.map(m => [m.lat, m.lng]);
-            if (points.length > 0) mainMap.fitBounds(L.latLngBounds(points), { maxZoom: 13, padding: [50, 50] });
-        };
-
-        window.resetMapBounds = function() { plotAllMainMarkers(); };
-
-        function getMarkerColor(type) {
-            switch (type) {
-                case 'park': return '#E60012';
-                case 'hotel': return '#D4AF37';
-                case 'airport': return '#3B82F6';
-                case 'transport': return '#06B6D4';
-                default: return '#8B5CF6';
-            }
-        }
-
-        function renderSidebarList() {
-            const container = document.getElementById('map-sidebar-list');
-            container.innerHTML = '';
-            tripData.forEach((day, idx) => {
-                const card = document.createElement('div');
-                card.className = 'bg-slate-900/80 p-3 rounded-xl border border-slate-800 hover:border-japanRed/50 transition cursor-pointer flex items-center justify-between';
-                card.onclick = () => {
-                    window.goToSlide(idx);
-                    const points = day.markers.map(m => [m.lat, m.lng]);
-                    if (points.length > 0) mainMap.fitBounds(L.latLngBounds(points), { maxZoom: 12 });
-                };
-                card.innerHTML = `
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-japanGold border border-slate-700">${day.date}</span>
-                            <span class="text-xs text-slate-400">${day.regionName}</span>
-                        </div>
-                        <h4 class="text-xs font-bold text-white mt-1">${day.title}</h4>
-                    </div>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500 shrink-0"></i>
-                `;
-                container.appendChild(card);
-            });
-            lucide.createIcons();
-        }
-
-        window.filterGrid = function(region, eventTarget) {
-            document.querySelectorAll('.grid-filter-btn').forEach(btn => {
-                btn.className = 'grid-filter-btn px-3 py-1.5 text-xs rounded-xl bg-slate-800 text-slate-300 hover:text-white font-medium transition';
-            });
-            eventTarget.className = 'grid-filter-btn px-3 py-1.5 text-xs rounded-xl bg-japanRed text-white font-medium shadow';
-            renderGridCards(region);
-        };
-
-        function renderGridCards(filter = 'all') {
+        function renderGridCards() {
             const container = document.getElementById('grid-container');
             if (!container) return;
             container.innerHTML = '';
 
-            tripData.forEach((_, idx) => {
-                const effData = getEffectiveDayData(idx);
-                if (filter !== 'all' && effData.region !== filter) return;
-
-                const b = effData.effectiveBudget;
-                const totalDayJpy = (b.food || 0) + (b.transport || 0) + (b.custom || 0);
+            defaultTripData.forEach((_, idx) => {
+                const eff = getEffectiveDayData(idx);
+                const b = eff.budget;
+                const total = (b.food || 0) + (b.transport || 0) + (b.custom || 0);
+                const thumb = eff.images[0] || 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80';
 
                 const card = document.createElement('div');
-                card.className = 'bg-cardDark border border-slate-700/80 rounded-2xl overflow-hidden hover:border-japanRed/60 transition cursor-pointer flex flex-col justify-between group shadow-lg';
+                card.className = 'bg-cardDark border border-slate-700/80 rounded-3xl overflow-hidden hover:border-japanRed/60 transition cursor-pointer flex flex-col justify-between group shadow-xl';
                 card.onclick = () => window.goToSlide(idx);
 
                 card.innerHTML = `
-                    <div class="h-36 w-full relative overflow-hidden bg-slate-900">
-                        <img src="${effData.effectiveImgUrl}" alt="${effData.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div class="h-48 w-full relative overflow-hidden bg-slate-900">
+                        <img src="${thumb}" alt="${eff.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
-                        <div class="absolute top-3 left-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-japanRed bg-slate-950/80 px-2.5 py-0.5 rounded-md border border-japanRed/30 backdrop-blur-sm">
-                                ${effData.date}
+                        <div class="absolute top-4 left-4">
+                            <span class="text-xs font-bold uppercase tracking-wider text-japanRed bg-slate-950/80 px-3 py-1 rounded-lg border border-japanRed/30 backdrop-blur-sm">
+                                ${eff.date}
                             </span>
-                        </div>
-                        <div class="absolute top-3 right-3">
-                            <span class="text-xs text-slate-300 bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800 backdrop-blur-sm">${effData.regionName}</span>
                         </div>
                     </div>
 
-                    <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
                         <div>
-                            <h3 class="text-base font-bold text-white group-hover:text-japanRed transition">${effData.title}</h3>
-                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">${effData.subtitle}</p>
+                            <h3 class="text-lg font-bold text-white group-hover:text-japanRed transition">${eff.title}</h3>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">${eff.subtitle}</p>
                         </div>
 
-                        <div class="pt-3 border-t border-slate-800 space-y-2">
-                            <div class="grid grid-cols-3 text-[11px] text-slate-300 text-center bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
+                        <div class="pt-4 border-t border-slate-800 space-y-3">
+                            <div class="grid grid-cols-3 text-xs text-slate-300 text-center bg-slate-900 p-2 rounded-xl border border-slate-800">
                                 <div>🍜 ¥${(b.food||0).toLocaleString()}</div>
                                 <div>🚆 ¥${(b.transport||0).toLocaleString()}</div>
                                 <div class="text-japanGold font-semibold">🎟️ ¥${(b.custom||0).toLocaleString()}</div>
                             </div>
-                            <div class="flex items-center justify-between text-xs pt-0.5">
+                            <div class="flex items-center justify-between text-xs pt-1">
                                 <span class="text-japanGold font-bold flex items-center gap-1">
-                                    <i data-lucide="wallet" class="w-3.5 h-3.5"></i> ~¥${totalDayJpy.toLocaleString()}
+                                    <i data-lucide="wallet" class="w-4 h-4"></i> ~¥${total.toLocaleString()}
                                 </span>
                                 <span class="text-japanRed font-semibold group-hover:underline flex items-center">
-                                    Слайд <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
+                                    Открыть слайд <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
                                 </span>
                             </div>
                         </div>
@@ -1189,9 +727,16 @@
             lucide.createIcons();
         }
 
-        // General UI Modal Logic
-        window.openChecklistModal = function() { document.getElementById('modal-checklist').classList.remove('hidden'); };
-        window.closeChecklistModal = function() { document.getElementById('modal-checklist').classList.add('hidden'); };
+        function saveChanges() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                if (!userId || !db) return;
+                const dayId = defaultTripData[currentSlide].day;
+                const key = `day_${dayId}`;
+                const docRef = doc(db, 'artifacts', appId, 'users', userId, 'days', key);
+                setDoc(docRef, userData[key], { merge: true }).catch(err => console.error("Save error:", err));
+            }, 800);
+        }
     </script>
 </body>
 </html>
