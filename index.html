@@ -42,8 +42,6 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        /* Фото: широкий адаптивный формат */
-        /* Карусель (режим просмотра) */
         .carousel-wrap {
             position: relative;
             width: 100%;
@@ -59,7 +57,6 @@
             object-fit: cover;
             background: #020617;
         }
-        /* Сетка (режим редактирования) */
         .photo-card {
             aspect-ratio: 16 / 9;
             width: 100%;
@@ -93,9 +90,7 @@
             </div>
         </div>
     </header>
-
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6 flex flex-col gap-6">
-        <!-- ============ PRESENTATION ============ -->
         <section id="view-presentation" class="flex flex-col gap-6 flex-1">
             <div class="flex items-center justify-between bg-cardDark p-4 rounded-2xl border border-slate-700/60 shadow-md flex-wrap gap-3">
                 <div class="flex items-center space-x-2">
@@ -111,10 +106,8 @@
                     <div id="dots-container" class="flex space-x-1.5"></div>
                 </div>
             </div>
-
             <div class="bg-cardDark border border-slate-700/80 rounded-3xl p-6 lg:p-8 shadow-2xl flex flex-col gap-8 flex-1 relative overflow-hidden">
                 <div class="absolute -top-24 -right-24 w-96 h-96 bg-japanRed/10 rounded-full blur-3xl pointer-events-none"></div>
-
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-stretch gap-4 z-10 border-b border-slate-800 pb-6">
                     <div class="space-y-2 w-full md:w-3/5">
                         <div class="flex items-center space-x-3 flex-wrap gap-y-2">
@@ -124,7 +117,6 @@
                         <input id="slide-title-input" type="text" oninput="updateSlideField('title', this.value)" placeholder="Заголовок дня" class="field-input w-full text-xl lg:text-2xl font-extrabold text-white bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed" />
                         <textarea id="slide-subtitle-input" oninput="updateSlideField('subtitle', this.value)" placeholder="Подзаголовок дня" rows="2" class="field-input w-full text-sm text-slate-300 leading-relaxed bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed resize-none"></textarea>
                     </div>
-
                     <div class="w-full md:w-2/5 bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3 z-10">
                         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-japanGold flex items-center gap-1.5">
@@ -141,7 +133,6 @@
                                 <input id="budget-transport-input" type="number" oninput="updateCurrentBudget('transport', this.value)" class="field-input w-full bg-slate-900 text-center font-bold text-slate-200 rounded p-1 border border-slate-700 focus:border-japanGold outline-none text-xs" />
                             </div>
                         </div>
-
                         <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60 space-y-2">
                             <div class="flex items-center justify-between">
                                 <span class="text-[10px] text-japanGold font-semibold flex items-center gap-1">🎟️ Прочее <span id="custom-sum-badge" class="text-slate-400 font-normal">(¥0)</span></span>
@@ -151,7 +142,6 @@
                             </div>
                             <div id="custom-items-list" class="space-y-1.5"></div>
                         </div>
-
                         <div class="bg-japanGold/10 border border-japanGold/30 p-2.5 rounded-xl flex items-center justify-between">
                             <span class="text-xs font-semibold text-japanGold flex items-center gap-1">
                                 <i data-lucide="coins" class="w-3.5 h-3.5"></i> Итого за день:
@@ -163,7 +153,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="space-y-3 z-10">
                     <div class="flex items-center justify-between">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
@@ -173,8 +162,6 @@
                             <i data-lucide="link" class="w-4 h-4"></i> Добавить по ссылке
                         </button>
                     </div>
-                
-                    <!-- Режим ПРОСМОТРА: карусель -->
                     <div id="carousel-view">
                         <div class="carousel-wrap">
                             <img id="carousel-img" src="" alt="Фото" />
@@ -187,11 +174,8 @@
                             <span id="carousel-counter" class="absolute bottom-3 right-3 bg-slate-950/80 text-white text-xs px-2.5 py-1 rounded-lg border border-slate-700">1 / 1</span>
                         </div>
                     </div>
-                
-                    <!-- Режим РЕДАКТИРОВАНИЯ: сетка всех фото -->
                     <div id="editor-view" class="edit-only grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
-
                 <div class="space-y-3 z-10">
                     <div class="flex items-center justify-between">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
@@ -205,8 +189,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- ============ GRID ============ -->
         <section id="view-grid" class="hidden flex-1 flex flex-col gap-6">
             <div class="bg-cardDark border border-japanGold/40 rounded-3xl p-6 shadow-2xl relative overflow-hidden bg-gradient-to-r from-slate-900 via-cardDark to-slate-900">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
@@ -241,7 +223,6 @@
             <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
     </main>
-
     <script>
         // ===== НАСТРОЙКИ ОБЛАКА (JSONBin) =====
         const BIN_ID = '6a9da074da38895dfe40745f';
@@ -249,13 +230,11 @@
         const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
         const CLOUD_ENABLED = !BIN_ID.includes('СЮДА') && !MASTER_KEY.includes('СЮДА');
         const LOCAL_KEY = 'japan_trip_2026_data';
-
         let currentSlide = 0;
         let currentPhoto = 0;
         let userData = {};
         let saveTimeout = null;
         let editMode = false;
-
         const defaultTripData = [
             { day: 1, date: '16.11', cityTag: 'Токио ➔ Кавагучико', title: 'Прилет в Токио и путь в Кавагучико', subtitle: 'Прибытие в Токио, экспресс до Синдзюку, автобус до Кавагучико и ужин в рёкане.', images: ['https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80'], budget: { food: 4000, transport: 3500, custom: 0 }, timeline: [ { time: 'Этап 1', text: 'Прилет в Токио, паспортный контроль и багаж.' }, { time: 'Этап 2', text: 'Скоростной экспресс до станции Синдзюку.' }, { time: 'Этап 3', text: 'Автобус-экспресс Busta Shinjuku ➔ Кавагучико.' }, { time: 'Этап 4', text: 'Заселение в рёкан с онсеном.' } ] },
             { day: 2, date: '17.11', cityTag: 'Кавагучико', title: 'Фудзи и Осенний Кленовый Туннель', subtitle: 'Утренний подъем на пагоду Чурейто, алый коридор Momiji Corridor и канатная дорога.', images: ['https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80'], budget: { food: 4500, transport: 1200, custom: 1500 }, timeline: [ { time: '08:00', text: 'Завтрак с видом на Фудзи.' }, { time: '09:00', text: 'Пагода Чурейто.' }, { time: '11:30', text: 'Кленовый туннель Momiji Corridor.' }, { time: '14:00', text: 'Обед лапшой Хото.' } ] },
@@ -271,16 +250,14 @@
             { day: 12, date: '27.11', cityTag: 'Токио (Релакс)', title: 'Релакс-День: Сады и Онсен', subtitle: 'Императорский сад, термальный комплекс Spa LaQua и свободное время.', images: ['https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80'], budget: { food: 6000, transport: 1000, custom: 3500 }, timeline: [ { time: '10:00', text: 'Сады Императорского Дворца.' }, { time: '16:00', text: 'Релакс в Spa LaQua.' } ] },
             { day: 13, date: '28.11', cityTag: 'Токио ➔ Вылет', title: 'Синдзюку-Гёэн & Вылет домой', subtitle: 'Утренняя прогулка по осеннему парку, сувениры и вылет домой.', images: ['https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=80'], budget: { food: 6000, transport: 3500, custom: 0 }, timeline: [ { time: '10:00', text: 'Парк Синдзюку-гёэн.' }, { time: '15:30', text: 'Трансфер в аэропорт и вылет.' } ] }
         ];
-
         document.addEventListener('DOMContentLoaded', async () => {
             lucide.createIcons();
             initPresentationDots();
             loadLocal();
             renderSlide(0);
-            renderGridCards();    // ← правильно
+            renderGridCards();
             await loadFromCloud();
         });
-
         window.toggleEditMode = function() {
             editMode = !editMode;
             document.body.classList.toggle('edit-mode', editMode);
@@ -295,27 +272,23 @@
                 label.innerText = 'Редактировать';
                 btn.querySelector('svg, i')?.setAttribute('data-lucide', 'pencil');
             }
-            (currentSlide);
+            renderSlide(currentSlide);
             lucide.createIcons();
         };
-
         // ===== ОБЛАКО / ЛОКАЛЬНОЕ СОХРАНЕНИЕ =====
         function setSyncStatus(text, color) {
             document.getElementById('sync-text').innerText = text;
             document.getElementById('sync-status').className = `text-[11px] flex items-center gap-1 ${color}`;
         }
-
         function loadLocal() {
             try {
                 const raw = localStorage.getItem(LOCAL_KEY);
                 if (raw) userData = JSON.parse(raw) || {};
             } catch (e) { console.warn('Local load error', e); }
         }
-
         function saveLocal() {
             try { localStorage.setItem(LOCAL_KEY, JSON.stringify(userData)); } catch (e) { console.warn('Local save error', e); }
         }
-
         async function loadFromCloud() {
             if (!CLOUD_ENABLED) { setSyncStatus('Локально', 'text-slate-500'); return; }
             setSyncStatus('Загрузка...', 'text-slate-400');
@@ -329,9 +302,9 @@
                 if (record && typeof record === 'object') {
                     userData = record;
                     saveLocal();
-                    (currentSlide);
-                    GridCards();
-                    GrandTotal();
+                    renderSlide(currentSlide);
+                    renderGridCards();
+                    renderGrandTotal();
                 }
                 setSyncStatus('Синхронизировано', 'text-emerald-400');
             } catch (e) {
@@ -339,7 +312,6 @@
                 setSyncStatus('Ошибка облака', 'text-japanRed');
             }
         }
-
         async function saveToCloud() {
             if (!CLOUD_ENABLED) return;
             setSyncStatus('Сохранение...', 'text-slate-400');
@@ -364,13 +336,11 @@
                 setSyncStatus('Ошибка сохранения', 'text-japanRed');
             }
         }
-
         function saveChanges() {
-            saveLocal(); // локально — сразу
+            saveLocal();
             clearTimeout(saveTimeout);
             saveTimeout = setTimeout(() => { saveToCloud(); }, 1200);
         }
-
         function getEffectiveDayData(index) {
             const baseDay = defaultTripData[index];
             const userDay = userData[`day_${baseDay.day}`] || {};
@@ -395,7 +365,6 @@
                 timeline: userDay.timeline || baseDay.timeline
             };
         }
-
         window.switchMode = function(mode) {
             document.getElementById('view-presentation').classList.add('hidden');
             document.getElementById('view-grid').classList.add('hidden');
@@ -409,11 +378,10 @@
             } else if (mode === 'grid') {
                 document.getElementById('view-grid').classList.remove('hidden');
                 document.getElementById('btn-mode-grid').className = activeBtn;
-                GrandTotal();
-                GridCards();
+                renderGrandTotal();
+                renderGridCards();
             }
         };
-
         function initPresentationDots() {
             const container = document.getElementById('dots-container');
             container.innerHTML = '';
@@ -424,8 +392,7 @@
                 container.appendChild(btn);
             });
         }
-
-        function Slide(index) {
+        function renderSlide(index) {
             currentSlide = index;
             currentPhoto = 0;
             const eff = getEffectiveDayData(index);
@@ -436,11 +403,9 @@
             document.getElementById('slide-subtitle-input').value = eff.subtitle;
             document.getElementById('budget-food-input').value = eff.budget.food;
             document.getElementById('budget-transport-input').value = eff.budget.transport;
-            CustomItems(eff.customItems);
+            renderCustomItems(eff.customItems);
             recalculateSlideBudget(eff.budget);
-
             renderPhotos(eff.images);
-
             const timelineContainer = document.getElementById('slide-timeline');
             timelineContainer.innerHTML = '';
             eff.timeline.forEach((item, tIdx) => {
@@ -452,21 +417,17 @@
                     <button onclick="removeTimelineItem(${tIdx})" class="edit-only text-slate-400 hover:text-red-400 p-1 shrink-0"><i data-lucide="x" class="w-4 h-4"></i></button>`;
                 timelineContainer.appendChild(row);
             });
-
             const dots = document.getElementById('dots-container').children;
             Array.from(dots).forEach((dot, idx) => {
                 dot.className = `w-2.5 h-2.5 rounded-full transition shrink-0 ${idx === index ? 'bg-japanRed scale-125' : 'bg-slate-700 hover:bg-slate-500'}`;
             });
             lucide.createIcons();
         }
-
         function renderPhotos(images) {
             const carouselView = document.getElementById('carousel-view');
             const editorView = document.getElementById('editor-view');
             if (!carouselView || !editorView) return;
-
             images = images || [];
-
             if (editMode) {
                 carouselView.classList.add('hidden');
                 editorView.classList.remove('hidden');
@@ -501,21 +462,18 @@
             }
             lucide.createIcons();
         }
-
         window.nextPhoto = function() {
             const imgs = getEffectiveDayData(currentSlide).images;
             if (imgs.length === 0) return;
             currentPhoto = (currentPhoto + 1) % imgs.length;
             renderPhotos(imgs);
         };
-
         window.prevPhoto = function() {
             const imgs = getEffectiveDayData(currentSlide).images;
             if (imgs.length === 0) return;
             currentPhoto = (currentPhoto - 1 + imgs.length) % imgs.length;
             renderPhotos(imgs);
         };
-
         window.addPhotoByUrl = function() {
             const url = prompt('Вставьте прямую ссылку на изображение (https://...):');
             if (!url) return;
@@ -530,7 +488,6 @@
             renderGridCards();
             saveChanges();
         };
-        
         function renderCustomItems(items) {
             const list = document.getElementById('custom-items-list');
             list.innerHTML = '';
@@ -551,21 +508,18 @@
             });
             lucide.createIcons();
         }
-
         function ensureUserDay() {
             const key = `day_${defaultTripData[currentSlide].day}`;
             if (!userData[key]) userData[key] = JSON.parse(JSON.stringify(getEffectiveDayData(currentSlide)));
             if (!userData[key].customItems) userData[key].customItems = [];
             return key;
         }
-
         window.addCustomItem = function() {
             const key = ensureUserDay();
             userData[key].customItems.push({ label: '', amount: 0 });
             renderSlide(currentSlide);
             saveChanges();
         };
-
         window.updateCustomItem = function(index, field, val) {
             const key = ensureUserDay();
             userData[key].customItems[index][field] = field === 'amount' ? (parseInt(val, 10) || 0) : val;
@@ -575,12 +529,10 @@
             renderGrandTotal();
             saveChanges();
         };
-
         function renderCustomItemsBadgeOnly(items) {
             const sum = items.reduce((s, i) => s + (parseInt(i.amount, 10) || 0), 0);
             document.getElementById('custom-sum-badge').innerText = `(¥${sum.toLocaleString()})`;
         }
-
         window.removeCustomItem = function(index) {
             const key = ensureUserDay();
             userData[key].customItems.splice(index, 1);
@@ -588,13 +540,11 @@
             renderGrandTotal();
             saveChanges();
         };
-
         window.updateSlideField = function(field, val) {
             const key = ensureUserDay();
             userData[key][field] = val;
             saveChanges();
         };
-
         window.updateCurrentBudget = function(category, val) {
             const num = parseInt(val, 10) || 0;
             const key = ensureUserDay();
@@ -605,14 +555,12 @@
             renderGrandTotal();
             saveChanges();
         };
-
         function recalculateSlideBudget(b) {
             const total = (b.food || 0) + (b.transport || 0) + (b.custom || 0);
             const rub = Math.round(total * 0.65);
             document.getElementById('budget-total-jpy').innerText = `~¥${total.toLocaleString()}`;
             document.getElementById('budget-total-sub').innerText = `(~${rub.toLocaleString()} ₽)`;
         }
-
         window.addTimelineItem = function() {
             const key = ensureUserDay();
             if (!userData[key].timeline) userData[key].timeline = [];
@@ -620,20 +568,17 @@
             renderSlide(currentSlide);
             saveChanges();
         };
-
         window.updateTimelineItem = function(index, field, val) {
             const key = ensureUserDay();
             userData[key].timeline[index][field] = val;
             saveChanges();
         };
-
         window.removeTimelineItem = function(index) {
             const key = ensureUserDay();
             userData[key].timeline.splice(index, 1);
             renderSlide(currentSlide);
             saveChanges();
         };
-
         window.removePhoto = function(index) {
             const key = ensureUserDay();
             userData[key].images.splice(index, 1);
@@ -641,11 +586,9 @@
             renderGridCards();
             saveChanges();
         };
-
         window.nextSlide = function() { if (currentSlide < defaultTripData.length - 1) renderSlide(currentSlide + 1); };
         window.prevSlide = function() { if (currentSlide > 0) renderSlide(currentSlide - 1); };
         window.goToSlide = function(index) { renderSlide(index); window.switchMode('presentation'); };
-
         function renderGrandTotal() {
             let f = 0, t = 0, c = 0;
             defaultTripData.forEach((_, idx) => {
@@ -660,7 +603,6 @@
             document.getElementById('grand-total-all-jpy').innerText = `¥${sum.toLocaleString()}`;
             document.getElementById('grand-total-all-sub').innerText = `(~${rub.toLocaleString()} ₽)`;
         }
-
         function renderGridCards() {
             const container = document.getElementById('grid-container');
             if (!container) return;
@@ -675,7 +617,7 @@
                 card.onclick = () => window.goToSlide(idx);
                 card.innerHTML = `
                     <div class="h-48 w-full relative overflow-hidden bg-slate-900">
-                        <img src="${thumb}" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <img src="${thumb}" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400x225/1e293b/64748b?text=Фото'" />
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
                         <div class="absolute top-4 left-4">
                             <span class="text-xs font-bold uppercase tracking-wider text-japanRed bg-slate-950/80 px-3 py-1 rounded-lg border border-japanRed/30 backdrop-blur-sm">${eff.date}</span>
