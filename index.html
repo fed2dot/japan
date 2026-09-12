@@ -42,9 +42,9 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        /* Фото: адаптивная сетка с фиксированным соотношением сторон */
+        /* Фото: широкий адаптивный формат */
         .photo-card {
-            aspect-ratio: 4 / 3;
+            aspect-ratio: 16 / 9;
             width: 100%;
         }
     </style>
@@ -156,7 +156,7 @@
                             <i data-lucide="upload" class="w-4 h-4"></i> Загрузить
                         </button>
                     </div>
-                    <div id="slide-photo-gallery" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+                    <div id="slide-photo-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
 
                 <div class="space-y-3 z-10">
@@ -257,11 +257,11 @@
             if (editMode) {
                 btn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-xl border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 hover:text-white transition-all flex items-center gap-1.5 whitespace-nowrap";
                 label.innerText = 'Готово';
-                btn.querySelector('i').setAttribute('data-lucide', 'check');
+                btn.querySelector('svg, i')?.setAttribute('data-lucide', 'check');
             } else {
                 btn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 whitespace-nowrap";
                 label.innerText = 'Редактировать';
-                btn.querySelector('i').setAttribute('data-lucide', 'pencil');
+                btn.querySelector('svg, i')?.setAttribute('data-lucide', 'pencil');
             }
             renderSlide(currentSlide);
             lucide.createIcons();
