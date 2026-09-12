@@ -276,7 +276,7 @@
             lucide.createIcons();
             initPresentationDots();
             loadLocal();          // сначала показываем локальные данные (мгновенно)
-            renderSlide(0);
+            (0);
             renderGridCards();
             await loadFromCloud(); // затем подтягиваем из облака (если настроено)
         });
@@ -295,7 +295,7 @@
                 label.innerText = 'Редактировать';
                 btn.querySelector('svg, i')?.setAttribute('data-lucide', 'pencil');
             }
-            renderSlide(currentSlide);
+            (currentSlide);
             lucide.createIcons();
         };
 
@@ -329,7 +329,7 @@
                 if (record && typeof record === 'object') {
                     userData = record;
                     saveLocal();
-                    renderSlide(currentSlide);
+                    (currentSlide);
                     renderGridCards();
                     renderGrandTotal();
                 }
@@ -435,7 +435,8 @@
             recalculateSlideBudget(eff.budget);
 
             renderPhotos(eff.images);
-            
+
+            const timelineContainer = document.getElementById('slide-timeline');
             timelineContainer.innerHTML = '';
             eff.timeline.forEach((item, tIdx) => {
                 const row = document.createElement('div');
