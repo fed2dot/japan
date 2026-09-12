@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Япония</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,102 +16,99 @@
                         darkSlate: '#0F172A',
                         cardDark: '#1E293B'
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
-    
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
         html { scroll-behavior: smooth; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body:not(.edit-mode) .edit-only { display: none !important; }
+        body:not(.edit-mode) .field-input {
+            background: transparent !important;
+            border-color: transparent !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            cursor: default;
+            resize: none;
+            pointer-events: none;
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="bg-darkSlate text-slate-100 font-sans antialiased min-h-screen flex flex-col">
-
-    <!-- Top Navigation Header -->
     <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 lg:px-8 py-3">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-full bg-japanRed flex items-center justify-center font-bold text-white shadow-lg shadow-japanRed/30 shrink-0">
-                    ⛩️
-                </div>
+                <div class="w-10 h-10 rounded-full bg-japanRed flex items-center justify-center font-bold text-white shadow-lg shadow-japanRed/30 shrink-0">⛩️</div>
                 <div>
                     <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
                         Япония <span class="text-xs px-2 py-0.5 rounded bg-japanRed/20 text-japanRed font-semibold border border-japanRed/30">13 Дней • 16-28 Ноября 2026</span>
                     </h1>
                 </div>
             </div>
-
-            <!-- View Switcher Tabs -->
-            <div class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700 overflow-x-auto no-scrollbar">
-                <button id="btn-mode-presentation" onclick="switchMode('presentation')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all bg-japanRed text-white shadow whitespace-nowrap">
-                    <i data-lucide="presentation" class="w-4 h-4 inline mr-1"></i> Презентация
+            <div class="flex items-center gap-3 flex-wrap">
+                <button id="btn-edit-toggle" onclick="toggleEditMode()" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <i data-lucide="pencil" class="w-4 h-4"></i> <span id="edit-toggle-label">Редактировать</span>
                 </button>
-                <button id="btn-mode-grid" onclick="switchMode('grid')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all whitespace-nowrap">
-                    <i data-lucide="grid" class="w-4 h-4 inline mr-1"></i> 13 Дней
-                </button>
+                <div class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700 overflow-x-auto no-scrollbar">
+                    <button id="btn-mode-presentation" onclick="switchMode('presentation')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all bg-japanRed text-white shadow whitespace-nowrap">
+                        <i data-lucide="presentation" class="w-4 h-4 inline mr-1"></i> Презентация
+                    </button>
+                    <button id="btn-mode-grid" onclick="switchMode('grid')" class="px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all whitespace-nowrap">
+                        <i data-lucide="grid" class="w-4 h-4 inline mr-1"></i> 13 Дней
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6 flex flex-col gap-6">
-
-        <!-- ================= PRESENTATION VIEW ================= -->
+        <!-- ============ PRESENTATION ============ -->
         <section id="view-presentation" class="flex flex-col gap-6 flex-1">
-            <!-- Slide Control Bar -->
             <div class="flex items-center justify-between bg-cardDark p-4 rounded-2xl border border-slate-700/60 shadow-md flex-wrap gap-3">
                 <div class="flex items-center space-x-2">
                     <button onclick="prevSlide()" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition disabled:opacity-50">
                         <i data-lucide="chevron-left" class="w-5 h-5"></i>
                     </button>
-                    <span id="slide-indicator" class="text-sm font-semibold px-3 py-1 bg-slate-900 rounded-lg text-slate-300 border border-slate-800">
-                        16.11 (День 1)
-                    </span>
+                    <span id="slide-indicator" class="text-sm font-semibold px-3 py-1 bg-slate-900 rounded-lg text-slate-300 border border-slate-800">16.11 (День 1)</span>
                     <button onclick="nextSlide()" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition">
                         <i data-lucide="chevron-right" class="w-5 h-5"></i>
                     </button>
                 </div>
-
-                <!-- Slide Navigation Dots -->
                 <div class="flex items-center space-x-1 overflow-x-auto no-scrollbar max-w-[240px] sm:max-w-xs">
                     <div id="dots-container" class="flex space-x-1.5"></div>
                 </div>
             </div>
 
-            <!-- Slide Content Card -->
             <div class="bg-cardDark border border-slate-700/80 rounded-3xl p-6 lg:p-8 shadow-2xl flex flex-col gap-8 flex-1 relative overflow-hidden">
                 <div class="absolute -top-24 -right-24 w-96 h-96 bg-japanRed/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <!-- Top Header & Editable Fields -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 z-10 border-b border-slate-800 pb-4">
-                    <div class="space-y-1 w-full md:w-3/5">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-stretch gap-4 z-10 border-b border-slate-800 pb-6">
+                    <div class="space-y-2 w-full md:w-3/5">
                         <div class="flex items-center space-x-3 flex-wrap gap-y-2">
-                            <span id="slide-date-tag" class="text-xs font-bold uppercase tracking-wider text-japanRed bg-japanRed/10 px-3 py-1 rounded-lg border border-japanRed/20">
-                                16.11
-                            </span>
-                            <input id="slide-city-input" type="text" oninput="updateSlideField('cityTag', this.value)" placeholder="Локация / Маршрут" class="bg-slate-900 text-slate-300 px-2 py-1 rounded border border-slate-700 text-xs w-60 outline-none focus:border-japanRed" />
+                            <span id="slide-date-tag" class="text-xs font-bold uppercase tracking-wider text-japanRed bg-japanRed/10 px-3 py-1 rounded-lg border border-japanRed/20">16.11</span>
+                            <input id="slide-city-input" type="text" oninput="updateSlideField('cityTag', this.value)" placeholder="Локация / Маршрут" class="field-input text-slate-300 px-2 py-1 rounded-lg border border-slate-700 bg-slate-900 text-xs font-semibold w-auto min-w-[240px] outline-none focus:border-japanRed" />
                         </div>
-                        <input id="slide-title-input" type="text" oninput="updateSlideField('title', this.value)" placeholder="Заголовок дня" class="w-full text-xl lg:text-2xl font-extrabold text-white bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed" />
-                        <textarea id="slide-subtitle-input" oninput="updateSlideField('subtitle', this.value)" placeholder="Подзаголовок дня" rows="2" class="w-full text-sm text-slate-300 bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed resize-none"></textarea>
+                        <input id="slide-title-input" type="text" oninput="updateSlideField('title', this.value)" placeholder="Заголовок дня" class="field-input w-full text-xl lg:text-2xl font-extrabold text-white bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed" />
+                        <textarea id="slide-subtitle-input" oninput="updateSlideField('subtitle', this.value)" placeholder="Подзаголовок дня" rows="2" class="field-input w-full text-sm text-slate-300 leading-relaxed bg-slate-900/60 border border-slate-700 rounded-xl px-3 py-1.5 outline-none focus:border-japanRed resize-none"></textarea>
                     </div>
 
-                    <!-- Budget Block -->
                     <div class="w-full md:w-2/5 bg-slate-900/90 border border-slate-800 p-4 rounded-2xl space-y-3 z-10">
                         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-japanGold flex items-center gap-1.5">
-                                <i data-lucide="wallet" class="w-4 h-4 text-japanGold"></i> Бюджет дня (на 1 чел)
+                                <i data-lucide="wallet" class="w-4 h-4 text-japanGold"></i> Бюджет дня (1 чел)
                             </h3>
-                            <span class="text-[10px] text-slate-400 uppercase font-semibold">Редактируемо</span>
                         </div>
-                        
-                                                <div class="grid grid-cols-2 gap-2 text-center text-xs">
+                        <div class="grid grid-cols-2 gap-2 text-center text-xs">
                             <div class="bg-slate-800/80 p-2 rounded-xl border border-slate-700/60">
                                 <span class="text-[10px] text-slate-400 block mb-0.5">🍜 Еда</span>
                                 <input id="budget-food-input" type="number" oninput="updateCurrentBudget('food', this.value)" class="field-input w-full bg-slate-900 text-center font-bold text-slate-200 rounded p-1 border border-slate-700 focus:border-japanGold outline-none text-xs" />
@@ -124,7 +119,6 @@
                             </div>
                         </div>
 
-                        <!-- Прочее: список пунктов -->
                         <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60 space-y-2">
                             <div class="flex items-center justify-between">
                                 <span class="text-[10px] text-japanGold font-semibold flex items-center gap-1">🎟️ Прочее <span id="custom-sum-badge" class="text-slate-400 font-normal">(¥0)</span></span>
@@ -133,16 +127,6 @@
                                 </button>
                             </div>
                             <div id="custom-items-list" class="space-y-1.5"></div>
-                        </div>
-
-                        <div class="bg-japanGold/10 border border-japanGold/30 p-2.5 rounded-xl flex items-center justify-between">
-                            <span class="text-xs font-semibold text-japanGold flex items-center gap-1">
-                                <i data-lucide="coins" class="w-3.5 h-3.5"></i> Итого:
-                            </span>
-                            <div class="text-right">
-                                <span id="budget-total-jpy" class="text-sm font-extrabold text-white">~¥0</span>
-                                <span id="budget-total-sub" class="text-[10px] text-slate-400 block font-normal">(~0 ₽)</span>
-                            </div>
                         </div>
 
                         <div class="bg-japanGold/10 border border-japanGold/30 p-2.5 rounded-xl flex items-center justify-between">
@@ -157,55 +141,43 @@
                     </div>
                 </div>
 
-                <!-- BIG PHOTO GALLERY SECTION -->
                 <div class="space-y-3 z-10">
                     <div class="flex items-center justify-between">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
-                            <i data-lucide="image" class="w-4 h-4 text-japanGold"></i> Большие фото локации (можно загрузить несколько)
+                            <i data-lucide="image" class="w-4 h-4 text-japanGold"></i> Фото локации
                         </h3>
-                        <button onclick="document.getElementById('image-upload-input').click()" class="text-xs text-japanGold hover:underline flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-                            <i data-lucide="upload" class="w-4 h-4"></i> Загрузить фотографии
+                        <button onclick="document.getElementById('image-upload-input').click()" class="edit-only text-xs text-japanGold hover:underline flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                            <i data-lucide="upload" class="w-4 h-4"></i> Загрузить
                         </button>
                     </div>
-                    
-                    <div id="slide-photo-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div id="slide-photo-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
 
-                <!-- Timeline / Program Editor -->
                 <div class="space-y-3 z-10">
                     <div class="flex items-center justify-between">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
                             <i data-lucide="clock" class="w-4 h-4 text-japanGold"></i> План Дня
                         </h3>
-                        <button onclick="addTimelineItem()" class="text-xs text-emerald-400 hover:underline flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded border border-slate-700">
-                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Добавить пункт
+                        <button onclick="addTimelineItem()" class="edit-only text-xs text-emerald-400 hover:underline flex items-center gap-1 bg-slate-800 px-2.5 py-1 rounded border border-slate-700">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Добавить
                         </button>
                     </div>
-                    <div id="slide-timeline" class="space-y-2.5 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
-                        <!-- Dynamic items -->
-                    </div>
+                    <div id="slide-timeline" class="space-y-2.5 bg-slate-900/60 p-4 rounded-2xl border border-slate-800"></div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= GRID OVERVIEW VIEW ================= -->
+        <!-- ============ GRID ============ -->
         <section id="view-grid" class="hidden flex-1 flex flex-col gap-6">
-            <!-- Grand Total Counter Banner -->
             <div class="bg-cardDark border border-japanGold/40 rounded-3xl p-6 shadow-2xl relative overflow-hidden bg-gradient-to-r from-slate-900 via-cardDark to-slate-900">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
                     <div>
                         <div class="flex items-center space-x-2">
-                            <span class="px-2.5 py-0.5 rounded bg-japanGold/20 text-japanGold border border-japanGold/30 text-[11px] font-bold uppercase tracking-wider">
-                                Сводный финансовый баланс
-                            </span>
-                            <span class="text-xs text-slate-400">13 Дней • На 1 человека</span>
+                            <span class="px-2.5 py-0.5 rounded bg-japanGold/20 text-japanGold border border-japanGold/30 text-[11px] font-bold uppercase tracking-wider">Сводный баланс</span>
+                            <span class="text-xs text-slate-400">13 Дней • 1 человек</span>
                         </div>
                         <h2 class="text-xl lg:text-2xl font-extrabold text-white mt-1">Финальная стоимость поездки</h2>
                     </div>
-
-                    <!-- Grand Total Display Cards -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto">
                         <div class="bg-slate-800/90 p-3 rounded-2xl border border-slate-700/80 text-center">
                             <span class="text-[11px] text-slate-400 block">🍜 Еда</span>
@@ -227,16 +199,10 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Grid Cards Container -->
-            <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamic cards populated via JS -->
-            </div>
+            <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
-
     </main>
 
-    <!-- Hidden file input for multi-photo upload -->
     <input type="file" id="image-upload-input" accept="image/png, image/jpeg, image/jpg, image/webp" multiple style="display: none;" />
 
     <script type="module">
@@ -245,168 +211,29 @@
         import { getFirestore, doc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         let currentSlide = 0;
-        let userData = {}; // dayOverrides
+        let userData = {};
         let saveTimeout = null;
+        let editMode = false;
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'japan-trip-2026';
         const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-        
         let app, auth, db, userId;
 
         const defaultTripData = [
-            {
-                day: 1, date: '16.11', cityTag: 'Токио ➔ Кавагучико',
-                title: 'Прилет в Токио и путь в Кавагучико',
-                subtitle: 'Прибытие в Токио, экспресс до Синдзюку, автобус до Кавагучико и ужин в рёкане.',
-                images: ['https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 4000, transport: 3500, custom: 0 },
-                timeline: [
-                    { time: 'Этап 1', text: 'Прилет в Токио, прохождение паспортного контроля и получение багажа.' },
-                    { time: 'Этап 2', text: 'Скоростной экспресс до станции Синдзюку.' },
-                    { time: 'Этап 3', text: 'Автобус-экспресс от автовокзала Busta Shinjuku до Кавагучико.' },
-                    { time: 'Этап 4', text: 'Заселение в рёкан с онсеном.' }
-                ]
-            },
-            {
-                day: 2, date: '17.11', cityTag: 'Кавагучико',
-                title: 'Фудзи и Осенний Кленовый Туннель',
-                subtitle: 'Утренний подъем на пагоду Чурейто, алый кленовый коридор Momiji Corridor и канатная дорога.',
-                images: ['https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 4500, transport: 1200, custom: 1500 },
-                timeline: [
-                    { time: '08:00', text: 'Завтрак с видом на гору Фудзи.' },
-                    { time: '09:00', text: 'Пагода Чурейто (Chureito Pagoda).' },
-                    { time: '11:30', text: 'Прогулка по алому кленовому туннелю Momiji Corridor.' },
-                    { time: '14:00', text: 'Обед лапшой Хото.' }
-                ]
-            },
-            {
-                day: 3, date: '18.11', cityTag: 'Кавагучико ➔ Осака',
-                title: 'Переезд в Осаку: Неоновый Дотонбори',
-                subtitle: 'Переезд на скоростном синкансэне в регион Кансай, вечерняя гастрономия и неоновые огни.',
-                images: ['https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 5500, transport: 14500, custom: 0 },
-                timeline: [
-                    { time: '09:00', text: 'Выезд из Кавагучико.' },
-                    { time: '11:30', text: 'Синкансэн до Син-Осаки.' },
-                    { time: '17:30', text: 'Прогулка по Дотонбори, такояки и окономияки.' }
-                ]
-            },
-            {
-                day: 4, date: '19.11', cityTag: 'Осака ➔ Нара ➔ Осака',
-                title: 'Древняя Нара: Священные Олени и Будда',
-                subtitle: 'Однодневный выезд в древнюю столицу: свободные олени и деревянный храм Тодай-дзи.',
-                images: ['https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 4000, transport: 1600, custom: 1000 },
-                timeline: [
-                    { time: '09:00', text: 'Поезд в Нару.' },
-                    { time: '10:00', text: 'Общение и кормление священных оленей в Парке Нара.' },
-                    { time: '11:30', text: 'Визит в храм Тодай-дзи.' }
-                ]
-            },
-            {
-                day: 5, date: '20.11', cityTag: 'Осака ➔ Киото ➔ Осака',
-                title: 'Феноменальный Киото: Бамбук и Алые Клены',
-                subtitle: 'Ранний выезд в Киото. Бамбуковая роща Арасияма и ворота Фусими Инари.',
-                images: ['https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 5000, transport: 1800, custom: 1200 },
-                timeline: [
-                    { time: '06:45', text: 'Ранний выезд в Киото.' },
-                    { time: '08:00', text: 'Бамбуковая роща Арасияма.' },
-                    { time: '15:00', text: 'Святилище Фусими Инари.' }
-                ]
-            },
-            {
-                day: 6, date: '21.11', cityTag: 'Universal Studios Japan',
-                title: 'Universal Studios Japan (USJ в Осаке)',
-                subtitle: 'Полный день культовых развлечений: Super Nintendo World и Harry Potter.',
-                images: ['https://images.unsplash.com/photo-1624316104870-bb729deaddf1?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 6000, transport: 800, custom: 18000 },
-                timeline: [
-                    { time: '07:30', text: 'Прибытие к воротам USJ.' },
-                    { time: '08:30', text: 'Super Nintendo World.' },
-                    { time: '12:00', text: 'Мир Гарри Поттера.' }
-                ]
-            },
-            {
-                day: 7, date: '22.11', cityTag: 'Осака ➔ Токио',
-                title: 'Замок Осаки ➔ Токио и Неоновая Сибуя',
-                subtitle: 'Утренний Замок Осаки, скоростной поезд в Токио и смотровая Shibuya Sky.',
-                images: ['https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 5500, transport: 14500, custom: 2500 },
-                timeline: [
-                    { time: '09:00', text: 'Сады Замка Осаки.' },
-                    { time: '11:30', text: 'Синкансэн в Токио (с видом на Фудзи).' },
-                    { time: '17:00', text: 'Сибуя: Shibuya Sky.' }
-                ]
-            },
-            {
-                day: 8, date: '23.11', cityTag: 'Токио (Сэтагая & Тоёсу)',
-                title: 'Храм Котов Готоку-дзи & teamLab Planets',
-                subtitle: 'Тысячи фигурок котов Манэки-нэко и босиком по воде в teamLab Planets.',
-                images: ['https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 5000, transport: 1200, custom: 3800 },
-                timeline: [
-                    { time: '09:30', text: 'Храм котов Готоку-дзи.' },
-                    { time: '15:30', text: 'teamLab Planets TOKYO.' }
-                ]
-            },
-            {
-                day: 9, date: '24.11', cityTag: 'Асакуса & Акихабара',
-                title: 'Асакуса & Акихабара',
-                subtitle: 'Древнейший храм Сэнсо-дзи, Акихабара и смотровая башня Tokyo Skytree.',
-                images: ['https://images.unsplash.com/photo-1583838424715-684c328b294d?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 5000, transport: 1000, custom: 3000 },
-                timeline: [
-                    { time: '09:00', text: 'Храм Сэнсо-дзи в Асакусе.' },
-                    { time: '12:00', text: 'Акихабара — шоппинг и электроника.' }
-                ]
-            },
-            {
-                day: 10, date: '25.11', cityTag: 'Tokyo Disneyland',
-                title: 'Tokyo Disneyland',
-                subtitle: 'Полное погружение в сказку Disney.',
-                images: ['https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 6000, transport: 1000, custom: 10000 },
-                timeline: [
-                    { time: '07:30', text: 'Вход в парк.' },
-                    { time: '11:00', text: 'Аттракционы и парад героев.' }
-                ]
-            },
-            {
-                day: 11, date: '26.11', cityTag: 'Харадзюку & Омотэсандо',
-                title: 'Святилище Мэйдзи, Харадзюку и Мода',
-                subtitle: 'Святилище Мэйдзи Дзингу, молодежная улица Такесита и шоппинг.',
-                images: ['https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 5500, transport: 800, custom: 0 },
-                timeline: [
-                    { time: '09:30', text: 'Святилище Мэйдзи Дзингу.' },
-                    { time: '11:30', text: 'Улица Такесита и блины.' }
-                ]
-            },
-            {
-                day: 12, date: '27.11', cityTag: 'Токио (Релакс)',
-                title: 'Релакс-День: Сады и Онсен',
-                subtitle: 'Императорский сад, термальный комплекс Spa LaQua и свободное время.',
-                images: ['https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 6000, transport: 1000, custom: 3500 },
-                timeline: [
-                    { time: '10:00', text: 'Сады Императорского Дворца.' },
-                    { time: '16:00', text: 'Релакс в Spa LaQua.' }
-                ]
-            },
-            {
-                day: 13, date: '28.11', cityTag: 'Токио ➔ Вылет',
-                title: 'Синдзюку-Гёэн & Вылет домой',
-                subtitle: 'Утренняя прогулка по осеннему парку, сувениры и вылет домой.',
-                images: ['https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=80'],
-                budget: { food: 6000, transport: 3500, custom: 0 },
-                timeline: [
-                    { time: '10:00', text: 'Парк Синдзюку-гёэн.' },
-                    { time: '15:30', text: 'Трансфер в аэропорт и вылет.' }
-                ]
-            }
+            { day: 1, date: '16.11', cityTag: 'Токио ➔ Кавагучико', title: 'Прилет в Токио и путь в Кавагучико', subtitle: 'Прибытие в Токио, экспресс до Синдзюку, автобус до Кавагучико и ужин в рёкане.', images: ['https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80'], budget: { food: 4000, transport: 3500, custom: 0 }, timeline: [ { time: 'Этап 1', text: 'Прилет в Токио, паспортный контроль и багаж.' }, { time: 'Этап 2', text: 'Скоростной экспресс до станции Синдзюку.' }, { time: 'Этап 3', text: 'Автобус-экспресс Busta Shinjuku ➔ Кавагучико.' }, { time: 'Этап 4', text: 'Заселение в рёкан с онсеном.' } ] },
+            { day: 2, date: '17.11', cityTag: 'Кавагучико', title: 'Фудзи и Осенний Кленовый Туннель', subtitle: 'Утренний подъем на пагоду Чурейто, алый коридор Momiji Corridor и канатная дорога.', images: ['https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1000&q=80'], budget: { food: 4500, transport: 1200, custom: 1500 }, timeline: [ { time: '08:00', text: 'Завтрак с видом на Фудзи.' }, { time: '09:00', text: 'Пагода Чурейто.' }, { time: '11:30', text: 'Кленовый туннель Momiji Corridor.' }, { time: '14:00', text: 'Обед лапшой Хото.' } ] },
+            { day: 3, date: '18.11', cityTag: 'Кавагучико ➔ Осака', title: 'Переезд в Осаку: Неоновый Дотонбори', subtitle: 'Переезд на синкансэне в Кансай, вечерняя гастрономия и неоновые огни.', images: ['https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=1000&q=80'], budget: { food: 5500, transport: 14500, custom: 0 }, timeline: [ { time: '09:00', text: 'Выезд из Кавагучико.' }, { time: '11:30', text: 'Синкансэн до Син-Осаки.' }, { time: '17:30', text: 'Дотонбори, такояки и окономияки.' } ] },
+            { day: 4, date: '19.11', cityTag: 'Осака ➔ Нара ➔ Осака', title: 'Древняя Нара: Священные Олени и Будда', subtitle: 'Однодневный выезд в древнюю столицу: олени и деревянный храм Тодай-дзи.', images: ['https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=1000&q=80'], budget: { food: 4000, transport: 1600, custom: 1000 }, timeline: [ { time: '09:00', text: 'Поезд в Нару.' }, { time: '10:00', text: 'Кормление оленей в Парке Нара.' }, { time: '11:30', text: 'Храм Тодай-дзи.' } ] },
+            { day: 5, date: '20.11', cityTag: 'Осака ➔ Киото ➔ Осака', title: 'Феноменальный Киото: Бамбук и Алые Клены', subtitle: 'Ранний выезд в Киото. Бамбуковая роща Арасияма и ворота Фусими Инари.', images: ['https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80'], budget: { food: 5000, transport: 1800, custom: 1200 }, timeline: [ { time: '06:45', text: 'Ранний выезд в Киото.' }, { time: '08:00', text: 'Бамбуковая роща Арасияма.' }, { time: '15:00', text: 'Святилище Фусими Инари.' } ] },
+            { day: 6, date: '21.11', cityTag: 'Universal Studios Japan', title: 'Universal Studios Japan (USJ)', subtitle: 'Полный день развлечений: Super Nintendo World и Harry Potter.', images: ['https://images.unsplash.com/photo-1624316104870-bb729deaddf1?auto=format&fit=crop&w=1000&q=80'], budget: { food: 6000, transport: 800, custom: 0 }, customItems: [ { label: 'Билет USJ', amount: 9800 }, { label: 'Express Pass', amount: 8200 } ], timeline: [ { time: '07:30', text: 'Прибытие к воротам USJ.' }, { time: '08:30', text: 'Super Nintendo World.' }, { time: '12:00', text: 'Мир Гарри Поттера.' } ] },
+            { day: 7, date: '22.11', cityTag: 'Осака ➔ Токио', title: 'Замок Осаки ➔ Токио и Сибуя', subtitle: 'Утренний Замок Осаки, скоростной поезд в Токио и смотровая Shibuya Sky.', images: ['https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80'], budget: { food: 5500, transport: 14500, custom: 2500 }, timeline: [ { time: '09:00', text: 'Сады Замка Осаки.' }, { time: '11:30', text: 'Синкансэн в Токио.' }, { time: '17:00', text: 'Shibuya Sky.' } ] },
+            { day: 8, date: '23.11', cityTag: 'Токио (Сэтагая & Тоёсу)', title: 'Храм Котов Готоку-дзи & teamLab Planets', subtitle: 'Тысячи котов Манэки-нэко и босиком по воде в teamLab Planets.', images: ['https://images.unsplash.com/photo-1578637387939-43c525550085?auto=format&fit=crop&w=1000&q=80'], budget: { food: 5000, transport: 1200, custom: 3800 }, timeline: [ { time: '09:30', text: 'Храм котов Готоку-дзи.' }, { time: '15:30', text: 'teamLab Planets TOKYO.' } ] },
+            { day: 9, date: '24.11', cityTag: 'Асакуса & Акихабара', title: 'Асакуса & Акихабара', subtitle: 'Древнейший храм Сэнсо-дзи, Акихабара и башня Tokyo Skytree.', images: ['https://images.unsplash.com/photo-1583838424715-684c328b294d?auto=format&fit=crop&w=1000&q=80'], budget: { food: 5000, transport: 1000, custom: 3000 }, timeline: [ { time: '09:00', text: 'Храм Сэнсо-дзи в Асакусе.' }, { time: '12:00', text: 'Акихабара — электроника.' } ] },
+            { day: 10, date: '25.11', cityTag: 'Tokyo Disneyland', title: 'Tokyo Disneyland', subtitle: 'Полное погружение в сказку Disney.', images: ['https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1000&q=80'], budget: { food: 6000, transport: 1000, custom: 10000 }, timeline: [ { time: '07:30', text: 'Вход в парк.' }, { time: '11:00', text: 'Аттракционы и парад.' } ] },
+            { day: 11, date: '26.11', cityTag: 'Харадзюку & Омотэсандо', title: 'Святилище Мэйдзи, Харадзюку и Мода', subtitle: 'Святилище Мэйдзи Дзингу, улица Такесита и шоппинг.', images: ['https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=1000&q=80'], budget: { food: 5500, transport: 800, custom: 0 }, timeline: [ { time: '09:30', text: 'Святилище Мэйдзи Дзингу.' }, { time: '11:30', text: 'Улица Такесита.' } ] },
+            { day: 12, date: '27.11', cityTag: 'Токио (Релакс)', title: 'Релакс-День: Сады и Онсен', subtitle: 'Императорский сад, термальный комплекс Spa LaQua и свободное время.', images: ['https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1000&q=80'], budget: { food: 6000, transport: 1000, custom: 3500 }, timeline: [ { time: '10:00', text: 'Сады Императорского Дворца.' }, { time: '16:00', text: 'Релакс в Spa LaQua.' } ] },
+            { day: 13, date: '28.11', cityTag: 'Токио ➔ Вылет', title: 'Синдзюку-Гёэн & Вылет домой', subtitle: 'Утренняя прогулка по осеннему парку, сувениры и вылет домой.', images: ['https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=80'], budget: { food: 6000, transport: 3500, custom: 0 }, timeline: [ { time: '10:00', text: 'Парк Синдзюку-гёэн.' }, { time: '15:30', text: 'Трансфер в аэропорт и вылет.' } ] }
         ];
 
         document.addEventListener('DOMContentLoaded', async () => {
@@ -414,57 +241,58 @@
             initPresentationDots();
             renderSlide(0);
             renderGridCards();
-
             try {
                 const firebaseConfig = JSON.parse(firebaseConfigStr);
                 if (Object.keys(firebaseConfig).length > 0) {
                     app = initializeApp(firebaseConfig);
                     auth = getAuth(app);
                     db = getFirestore(app);
-
-                    if (initialAuthToken) {
-                        await signInWithCustomToken(auth, initialAuthToken);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-
+                    if (initialAuthToken) { await signInWithCustomToken(auth, initialAuthToken); }
+                    else { await signInAnonymously(auth); }
                     userId = auth.currentUser.uid;
                     subscribeToUserData();
                 }
-            } catch (err) {
-                console.log("Offline mode active.");
-            }
+            } catch (err) { console.log("Offline mode active."); }
         });
+
+        window.toggleEditMode = function() {
+            editMode = !editMode;
+            document.body.classList.toggle('edit-mode', editMode);
+            const btn = document.getElementById('btn-edit-toggle');
+            const label = document.getElementById('edit-toggle-label');
+            if (editMode) {
+                btn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-xl border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 hover:text-white transition-all flex items-center gap-1.5 whitespace-nowrap";
+                label.innerText = 'Готово';
+                btn.querySelector('i').setAttribute('data-lucide', 'check');
+            } else {
+                btn.className = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 whitespace-nowrap";
+                label.innerText = 'Редактировать';
+                btn.querySelector('i').setAttribute('data-lucide', 'pencil');
+            }
+            renderSlide(currentSlide);
+            lucide.createIcons();
+        };
 
         function subscribeToUserData() {
             if (!userId || !db) return;
             const colRef = collection(db, 'artifacts', appId, 'users', userId, 'days');
-            
             onSnapshot(colRef, (snapshot) => {
-                snapshot.forEach(docSnap => {
-                    userData[docSnap.id] = docSnap.data();
-                });
+                snapshot.forEach(docSnap => { userData[docSnap.id] = docSnap.data(); });
                 renderSlide(currentSlide);
                 renderGridCards();
                 renderGrandTotal();
-            }, (error) => {
-                console.error("Firestore sync error:", error);
-            });
+            }, (error) => { console.error("Firestore sync error:", error); });
         }
 
         function getEffectiveDayData(index) {
             const baseDay = defaultTripData[index];
             const userDay = userData[`day_${baseDay.day}`] || {};
-
-            // Определяем список пунктов "Прочее"
             let customItems = userDay.customItems || baseDay.customItems;
             if (!customItems) {
-                // Миграция: старое число custom -> один пункт
                 const oldCustom = userDay.budget?.custom ?? baseDay.budget.custom;
                 customItems = oldCustom > 0 ? [{ label: 'Прочее', amount: oldCustom }] : [];
             }
             const customSum = customItems.reduce((s, i) => s + (parseInt(i.amount, 10) || 0), 0);
-
             return {
                 ...baseDay,
                 cityTag: userDay.cityTag !== undefined ? userDay.cityTag : baseDay.cityTag,
@@ -475,7 +303,7 @@
                 budget: {
                     food: userDay.budget?.food !== undefined ? userDay.budget.food : baseDay.budget.food,
                     transport: userDay.budget?.transport !== undefined ? userDay.budget.transport : baseDay.budget.transport,
-                    custom: customSum // вычисляется автоматически
+                    custom: customSum
                 },
                 timeline: userDay.timeline || baseDay.timeline
             };
@@ -484,13 +312,10 @@
         window.switchMode = function(mode) {
             document.getElementById('view-presentation').classList.add('hidden');
             document.getElementById('view-grid').classList.add('hidden');
-
             const inactiveBtn = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all whitespace-nowrap";
             const activeBtn = "px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-all bg-japanRed text-white shadow whitespace-nowrap";
-
             document.getElementById('btn-mode-presentation').className = inactiveBtn;
             document.getElementById('btn-mode-grid').className = inactiveBtn;
-
             if (mode === 'presentation') {
                 document.getElementById('view-presentation').classList.remove('hidden');
                 document.getElementById('btn-mode-presentation').className = activeBtn;
@@ -516,53 +341,48 @@
         function renderSlide(index) {
             currentSlide = index;
             const eff = getEffectiveDayData(index);
-
             document.getElementById('slide-indicator').innerText = `${eff.date} (День ${eff.day})`;
             document.getElementById('slide-date-tag').innerText = eff.date;
             document.getElementById('slide-city-input').value = eff.cityTag;
             document.getElementById('slide-title-input').value = eff.title;
             document.getElementById('slide-subtitle-input').value = eff.subtitle;
-
             document.getElementById('budget-food-input').value = eff.budget.food;
             document.getElementById('budget-transport-input').value = eff.budget.transport;
             renderCustomItems(eff.customItems);
             recalculateSlideBudget(eff.budget);
 
-            // Render Photos
             const gallery = document.getElementById('slide-photo-gallery');
             gallery.innerHTML = '';
+            if (eff.images.length === 0 && !editMode) {
+                gallery.innerHTML = `<div class="col-span-full h-40 flex items-center justify-center text-slate-600 text-sm border border-dashed border-slate-700 rounded-2xl">Нет фотографий</div>`;
+            }
             eff.images.forEach((imgUrl, imgIdx) => {
                 const card = document.createElement('div');
                 card.className = 'relative h-64 rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 group';
                 card.innerHTML = `
                     <img src="${imgUrl}" alt="Фото" class="w-full h-full object-cover" />
-                    <button onclick="removePhoto(${imgIdx})" class="absolute top-3 right-3 bg-slate-950/80 text-red-400 hover:text-red-300 p-2 rounded-xl border border-slate-700 opacity-0 group-hover:opacity-100 transition">
+                    <button onclick="removePhoto(${imgIdx})" class="edit-only absolute top-3 right-3 bg-slate-950/80 text-red-400 hover:text-red-300 p-2 rounded-xl border border-slate-700 transition">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                `;
+                    </button>`;
                 gallery.appendChild(card);
             });
 
-            // Render Timeline
             const timelineContainer = document.getElementById('slide-timeline');
             timelineContainer.innerHTML = '';
             eff.timeline.forEach((item, tIdx) => {
                 const row = document.createElement('div');
-                row.className = 'flex items-center space-x-2 bg-slate-800/60 p-2 rounded-xl border border-slate-700/60';
+                row.className = 'flex items-center gap-2 bg-slate-800/60 p-2 rounded-xl border border-slate-700/60';
                 row.innerHTML = `
-                    <input type="text" value="${item.time}" oninput="updateTimelineItem(${tIdx}, 'time', this.value)" class="w-20 bg-slate-900 text-xs text-japanGold font-bold px-2 py-1 rounded border border-slate-700 outline-none text-center" />
-                    <input type="text" value="${item.text}" oninput="updateTimelineItem(${tIdx}, 'text', this.value)" class="flex-1 bg-slate-900 text-xs text-slate-200 px-3 py-1 rounded border border-slate-700 outline-none" />
-                    <button onclick="removeTimelineItem(${tIdx})" class="text-slate-400 hover:text-red-400 p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
-                `;
+                    <input type="text" value="${item.time.replace(/"/g,'&quot;')}" oninput="updateTimelineItem(${tIdx}, 'time', this.value)" class="field-input w-20 bg-slate-900 text-xs text-japanGold font-bold px-2 py-1 rounded border border-slate-700 outline-none text-center shrink-0" />
+                    <input type="text" value="${item.text.replace(/"/g,'&quot;')}" oninput="updateTimelineItem(${tIdx}, 'text', this.value)" class="field-input flex-1 bg-slate-900 text-xs text-slate-200 px-3 py-1 rounded border border-slate-700 outline-none" />
+                    <button onclick="removeTimelineItem(${tIdx})" class="edit-only text-slate-400 hover:text-red-400 p-1 shrink-0"><i data-lucide="x" class="w-4 h-4"></i></button>`;
                 timelineContainer.appendChild(row);
             });
 
-            // Update Dots
             const dots = document.getElementById('dots-container').children;
             Array.from(dots).forEach((dot, idx) => {
                 dot.className = `w-2.5 h-2.5 rounded-full transition shrink-0 ${idx === index ? 'bg-japanRed scale-125' : 'bg-slate-700 hover:bg-slate-500'}`;
             });
-
             lucide.createIcons();
         }
 
@@ -571,7 +391,6 @@
             list.innerHTML = '';
             const sum = items.reduce((s, i) => s + (parseInt(i.amount, 10) || 0), 0);
             document.getElementById('custom-sum-badge').innerText = `(¥${sum.toLocaleString()})`;
-
             if (items.length === 0) {
                 list.innerHTML = `<div class="text-[10px] text-slate-500 text-center py-1">Нет пунктов</div>`;
                 return;
@@ -605,7 +424,6 @@
         window.updateCustomItem = function(index, field, val) {
             const key = ensureUserDay();
             userData[key].customItems[index][field] = field === 'amount' ? (parseInt(val, 10) || 0) : val;
-            // Пересчёт бюджета и итогов без полной перерисовки
             const eff = getEffectiveDayData(currentSlide);
             renderCustomItemsBadgeOnly(eff.customItems);
             recalculateSlideBudget(eff.budget);
@@ -613,7 +431,6 @@
             saveChanges();
         };
 
-        // Обновляем только сумму-бейдж и итог (чтобы не сбивать фокус при вводе)
         function renderCustomItemsBadgeOnly(items) {
             const sum = items.reduce((s, i) => s + (parseInt(i.amount, 10) || 0), 0);
             document.getElementById('custom-sum-badge').innerText = `(¥${sum.toLocaleString()})`;
@@ -642,8 +459,8 @@
             if (!userData[key]) userData[key] = getEffectiveDayData(currentSlide);
             if (!userData[key].budget) userData[key].budget = { food: 0, transport: 0, custom: 0 };
             userData[key].budget[category] = num;
-
-            recalculateSlideBudget(userData[key].budget);
+            const eff = getEffectiveDayData(currentSlide);
+            recalculateSlideBudget(eff.budget);
             renderGrandTotal();
             saveChanges();
         };
@@ -692,16 +509,13 @@
             saveChanges();
         };
 
-        // Multi-image file upload handler
         document.getElementById('image-upload-input').addEventListener('change', function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
-
             const dayId = defaultTripData[currentSlide].day;
             const key = `day_${dayId}`;
             const eff = getEffectiveDayData(currentSlide);
             if (!userData[key]) userData[key] = JSON.parse(JSON.stringify(eff));
-
             let processed = 0;
             Array.from(files).forEach(file => {
                 const reader = new FileReader();
@@ -714,13 +528,10 @@
                         let w = img.width, h = img.height;
                         if (w > h && w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; }
                         else if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; }
-                        canvas.width = w;
-                        canvas.height = h;
+                        canvas.width = w; canvas.height = h;
                         ctx.drawImage(img, 0, 0, w, h);
-                        
                         const base64 = canvas.toDataURL('image/jpeg', 0.65);
                         userData[key].images.push(base64);
-                        
                         processed++;
                         if (processed === files.length) {
                             renderSlide(currentSlide);
@@ -732,26 +543,21 @@
                 };
                 reader.readAsDataURL(file);
             });
+            e.target.value = '';
         });
 
         window.nextSlide = function() { if (currentSlide < defaultTripData.length - 1) renderSlide(currentSlide + 1); };
         window.prevSlide = function() { if (currentSlide > 0) renderSlide(currentSlide - 1); };
-        window.goToSlide = function(index) {
-            renderSlide(index);
-            window.switchMode('presentation');
-        };
+        window.goToSlide = function(index) { renderSlide(index); window.switchMode('presentation'); };
 
         function renderGrandTotal() {
             let f = 0, t = 0, c = 0;
             defaultTripData.forEach((_, idx) => {
                 const b = getEffectiveDayData(idx).budget;
-                f += b.food || 0;
-                t += b.transport || 0;
-                c += b.custom || 0;
+                f += b.food || 0; t += b.transport || 0; c += b.custom || 0;
             });
             const sum = f + t + c;
             const rub = Math.round(sum * 0.65);
-
             document.getElementById('grand-total-food').innerText = `¥${f.toLocaleString()}`;
             document.getElementById('grand-total-transport').innerText = `¥${t.toLocaleString()}`;
             document.getElementById('grand-total-custom').innerText = `¥${c.toLocaleString()}`;
@@ -763,34 +569,27 @@
             const container = document.getElementById('grid-container');
             if (!container) return;
             container.innerHTML = '';
-
             defaultTripData.forEach((_, idx) => {
                 const eff = getEffectiveDayData(idx);
                 const b = eff.budget;
                 const total = (b.food || 0) + (b.transport || 0) + (b.custom || 0);
                 const thumb = eff.images[0] || 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=80';
-
                 const card = document.createElement('div');
                 card.className = 'bg-cardDark border border-slate-700/80 rounded-3xl overflow-hidden hover:border-japanRed/60 transition cursor-pointer flex flex-col justify-between group shadow-xl';
                 card.onclick = () => window.goToSlide(idx);
-
                 card.innerHTML = `
                     <div class="h-48 w-full relative overflow-hidden bg-slate-900">
-                        <img src="${thumb}" alt="${eff.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <img src="${thumb}" alt="" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
                         <div class="absolute top-4 left-4">
-                            <span class="text-xs font-bold uppercase tracking-wider text-japanRed bg-slate-950/80 px-3 py-1 rounded-lg border border-japanRed/30 backdrop-blur-sm">
-                                ${eff.date}
-                            </span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-japanRed bg-slate-950/80 px-3 py-1 rounded-lg border border-japanRed/30 backdrop-blur-sm">${eff.date}</span>
                         </div>
                     </div>
-
                     <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
                         <div>
                             <h3 class="text-lg font-bold text-white group-hover:text-japanRed transition">${eff.title}</h3>
                             <p class="text-xs text-slate-400 mt-1 line-clamp-2">${eff.subtitle}</p>
                         </div>
-
                         <div class="pt-4 border-t border-slate-800 space-y-3">
                             <div class="grid grid-cols-3 text-xs text-slate-300 text-center bg-slate-900 p-2 rounded-xl border border-slate-800">
                                 <div>🍜 ¥${(b.food||0).toLocaleString()}</div>
@@ -798,19 +597,13 @@
                                 <div class="text-japanGold font-semibold">🎟️ ¥${(b.custom||0).toLocaleString()}</div>
                             </div>
                             <div class="flex items-center justify-between text-xs pt-1">
-                                <span class="text-japanGold font-bold flex items-center gap-1">
-                                    <i data-lucide="wallet" class="w-4 h-4"></i> ~¥${total.toLocaleString()}
-                                </span>
-                                <span class="text-japanRed font-semibold group-hover:underline flex items-center">
-                                    Открыть слайд <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
-                                </span>
+                                <span class="text-japanGold font-bold flex items-center gap-1"><i data-lucide="wallet" class="w-4 h-4"></i> ~¥${total.toLocaleString()}</span>
+                                <span class="text-japanRed font-semibold group-hover:underline flex items-center">Открыть <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></span>
                             </div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 container.appendChild(card);
             });
-
             renderGrandTotal();
             lucide.createIcons();
         }
@@ -828,5 +621,3 @@
     </script>
 </body>
 </html>
-
-
