@@ -43,6 +43,23 @@
             overflow: hidden;
         }
         /* Фото: широкий адаптивный формат */
+        /* Карусель (режим просмотра) */
+        .carousel-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #0f172a;
+            border: 1px solid #334155;
+        }
+        .carousel-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #020617;
+        }
+        /* Сетка (режим редактирования) */
         .photo-card {
             aspect-ratio: 16 / 9;
             width: 100%;
@@ -152,11 +169,32 @@
                         <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
                             <i data-lucide="image" class="w-4 h-4 text-japanGold"></i> Фото локации
                         </h3>
-                        <button onclick="document.getElementById('image-upload-input').click()" class="edit-only text-xs text-japanGold hover:underline flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-                            <i data-lucide="upload" class="w-4 h-4"></i> Загрузить
-                        </button>
+                        <div class="edit-only flex items-center gap-2">
+                            <button onclick="addPhotoByUrl()" class="text-xs text-emerald-400 hover:underline flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                                <i data-lucide="link" class="w-4 h-4"></i> По ссылке (в облако)
+                            </button>
+                            <button onclick="document.getElementById('image-upload-input').click()" class="text-xs text-japanGold hover:underline flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                                <i data-lucide="upload" class="w-4 h-4"></i> Загрузить (локально)
+                            </button>
+                        </div>
                     </div>
-                    <div id="slide-photo-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                
+                    <!-- Режим ПРОСМОТРА: карусель -->
+                    <div id="carousel-view">
+                        <div class="carousel-wrap">
+                            <img id="carousel-img" src="" alt="Фото" />
+                            <button onclick="prevPhoto()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-slate-950/70 hover:bg-slate-950 text-white p-2 rounded-full border border-slate-700 transition">
+                                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                            </button>
+                            <button onclick="nextPhoto()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-slate-950/70 hover:bg-slate-950 text-white p-2 rounded-full border border-slate-700 transition">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                            <span id="carousel-counter" class="absolute bottom-3 right-3 bg-slate-950/80 text-white text-xs px-2.5 py-1 rounded-lg border border-slate-700">1 / 1</span>
+                        </div>
+                    </div>
+                
+                    <!-- Режим РЕДАКТИРОВАНИЯ: сетка всех фото -->
+                    <div id="editor-view" class="edit-only grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
 
                 <div class="space-y-3 z-10">
@@ -220,6 +258,7 @@
         const LOCAL_KEY = 'japan_trip_2026_data';
 
         let currentSlide = 0;
+        let currentPhoto = 0;
         let userData = {};
         let saveTimeout = null;
         let editMode = false;
@@ -390,6 +429,7 @@
 
         function renderSlide(index) {
             currentSlide = index;
+            currentPhoto = 0;
             const eff = getEffectiveDayData(index);
             document.getElementById('slide-indicator').innerText = `${eff.date} (День ${eff.day})`;
             document.getElementById('slide-date-tag').innerText = eff.date;
@@ -401,23 +441,8 @@
             renderCustomItems(eff.customItems);
             recalculateSlideBudget(eff.budget);
 
-            const gallery = document.getElementById('slide-photo-gallery');
-            gallery.innerHTML = '';
-            if (eff.images.length === 0 && !editMode) {
-                gallery.innerHTML = `<div class="col-span-full h-40 flex items-center justify-center text-slate-600 text-sm border border-dashed border-slate-700 rounded-2xl">Нет фотографий</div>`;
-            }
-            eff.images.forEach((imgUrl, imgIdx) => {
-                const card = document.createElement('div');
-                card.className = 'photo-card relative rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 group';
-                card.innerHTML = `
-                    <img src="${imgUrl}" alt="Фото" class="w-full h-full object-cover" />
-                    <button onclick="removePhoto(${imgIdx})" class="edit-only absolute top-2 right-2 bg-slate-950/80 text-red-400 hover:text-red-300 p-2 rounded-xl border border-slate-700 transition">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>`;
-                gallery.appendChild(card);
-            });
-
-            const timelineContainer = document.getElementById('slide-timeline');
+            renderPhotos(eff.images);
+            
             timelineContainer.innerHTML = '';
             eff.timeline.forEach((item, tIdx) => {
                 const row = document.createElement('div');
@@ -436,6 +461,78 @@
             lucide.createIcons();
         }
 
+        function renderPhotos(images) {
+            const carouselView = document.getElementById('carousel-view');
+            const editorView = document.getElementById('editor-view');
+
+            if (editMode) {
+                // РЕДАКТИРОВАНИЕ: показываем сетку всех фото
+                carouselView.classList.add('hidden');
+                editorView.classList.remove('hidden');
+                editorView.innerHTML = '';
+                if (images.length === 0) {
+                    editorView.innerHTML = `<div class="col-span-full h-40 flex items-center justify-center text-slate-600 text-sm border border-dashed border-slate-700 rounded-2xl">Нет фотографий. Добавьте по ссылке или загрузите.</div>`;
+                }
+                images.forEach((imgUrl, imgIdx) => {
+                    const isLocal = imgUrl.startsWith('data:');
+                    const card = document.createElement('div');
+                    card.className = 'photo-card relative rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 group';
+                    card.innerHTML = `
+                        <img src="${imgUrl}" alt="Фото" class="w-full h-full object-cover" />
+                        <span class="absolute bottom-2 left-2 text-[10px] px-2 py-0.5 rounded ${isLocal ? 'bg-japanGold/80 text-slate-900' : 'bg-emerald-500/80 text-white'}">${isLocal ? '💾 Локально' : '☁️ Облако'}</span>
+                        <button onclick="removePhoto(${imgIdx})" class="absolute top-2 right-2 bg-slate-950/80 text-red-400 hover:text-red-300 p-2 rounded-xl border border-slate-700 transition">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>`;
+                    editorView.appendChild(card);
+                });
+            } else {
+                // ПРОСМОТР: карусель
+                editorView.classList.add('hidden');
+                carouselView.classList.remove('hidden');
+                if (currentPhoto >= images.length) currentPhoto = 0;
+                const img = document.getElementById('carousel-img');
+                const counter = document.getElementById('carousel-counter');
+                if (images.length === 0) {
+                    img.src = '';
+                    img.alt = 'Нет фото';
+                    counter.innerText = '0 / 0';
+                } else {
+                    img.src = images[currentPhoto];
+                    counter.innerText = `${currentPhoto + 1} / ${images.length}`;
+                }
+            }
+            lucide.createIcons();
+        }
+
+        window.nextPhoto = function() {
+            const imgs = getEffectiveDayData(currentSlide).images;
+            if (imgs.length === 0) return;
+            currentPhoto = (currentPhoto + 1) % imgs.length;
+            renderPhotos(imgs);
+        };
+
+        window.prevPhoto = function() {
+            const imgs = getEffectiveDayData(currentSlide).images;
+            if (imgs.length === 0) return;
+            currentPhoto = (currentPhoto - 1 + imgs.length) % imgs.length;
+            renderPhotos(imgs);
+        };
+
+        window.addPhotoByUrl = function() {
+            const url = prompt('Вставьте прямую ссылку на изображение (https://...):');
+            if (!url) return;
+            const clean = url.trim();
+            if (!clean.startsWith('http')) {
+                alert('Ссылка должна начинаться с http:// или https://');
+                return;
+            }
+            const key = ensureUserDay();
+            userData[key].images.push(clean);
+            renderSlide(currentSlide);
+            renderGridCards();
+            saveChanges();
+        };
+        
         function renderCustomItems(items) {
             const list = document.getElementById('custom-items-list');
             list.innerHTML = '';
